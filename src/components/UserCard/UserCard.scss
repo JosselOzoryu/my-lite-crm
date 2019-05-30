@@ -1,0 +1,9 @@
+.row {
+    display: flex;
+}
+
+.id-container,
+.name-container{
+    display: flex;
+    flex-direction: column;
+}
