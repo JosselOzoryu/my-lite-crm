@@ -1,9 +1,12 @@
-.row {
-    display: flex;
-}
-
-.id-container,
-.name-container{
+.user-card {
     display: flex;
     flex-direction: column;
+
+& .user-card__row {
+    display: flex;
+}
+}
+
+.user-card__avatar {
+    display: flex;
 }

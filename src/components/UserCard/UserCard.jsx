@@ -1,40 +1,41 @@
 //Core imports
 import React from "react";
 
+//Components
+
 //Styling imports
 import "./UserCard.scss";
 
 class UserCard extends React.Component {
     render() {
         return (
-        <div className="user-card">
-            <div className="row">
-                <div className="profile-picture">
-                    <img>
+            <div className="user-card">
+                <div className="user-card__row">
+                    <img className="user-card__avatar">
+
                     </img>
                 </div>
-                <div className="id-name">
-                    <div className="id-container">
-                        <span className="id-label">ID: </span>
-                        <span className="id-value">123</span>
+                <div className="user-card__row">
+                    <div className="user-card__detail-row">
+                        <div className="user-card__detail-container">
+                            <span>
+                                ID
+                            </span>
+                            <span>
+                                NOMBRE:
+                            </span>
+                        </div>
+                        <div className="user-card__detail-container">
+
+                        </div>
                     </div>
-                    <div className="name-container">
-                                <span className="name-label">NOMBRE: </span>
-                                <span className="name-value">Rosa Meltrozo</span>
+                    <div className="user-card__detail-row">
+
                     </div>
                 </div>
-            </div> 
-            <div className="row">
-                <div className="birhtdate-container">
-                    <span className="birthdate-label"></span>  
-                </div>
             </div>
-            <div className="row">
-            </div>
-        </div>
         )
     }
-
 }
 
 export default UserCard;
