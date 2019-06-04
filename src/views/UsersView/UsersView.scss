@@ -1,0 +1,11 @@
+#users-view {
+  padding: 0 16px;
+}
+
+.users-view__users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 280px);
+  grid-gap: 14px;
+  justify-content: center;
+  width: 100%;
+}
