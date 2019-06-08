@@ -1,5 +1,16 @@
 #users-view {
-  padding: 0 16px;
+  display: flex;
+  height: calc(100vh - 50px);
+  box-sizing: border-box;
+}
+
+.users-view__users-comtainer {
+  display: flex;
+  width: 85%;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .users-view__users-grid {
@@ -8,4 +19,5 @@
   grid-gap: 14px;
   justify-content: center;
   width: 100%;
+  box-sizing: border-box;
 }
