@@ -17,9 +17,9 @@ class SideBar extends React.Component {
 
   handleInputChange = event => {
     this.setState({
-      searchTerm: event.target.value
+      searchTerm: event.target.value.trimLeft()
     });
-    this.props.onSearch(event.target.value);
+    this.props.onSearch(event.target.value.trimLeft());
   };
 
   render() {
@@ -27,7 +27,7 @@ class SideBar extends React.Component {
     return (
       <div className="side-bar">
         <div className="side-bar__title-container">
-          <div className="side-bar__title-container--value" />
+          <div className="side-bar__title-container--value">TITULO SIDEBAR</div>
         </div>
         <div className="side-bar__search-container">
           <div className="side-bar__search-container--input">
