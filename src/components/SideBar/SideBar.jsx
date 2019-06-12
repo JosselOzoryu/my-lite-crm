@@ -23,11 +23,11 @@ class SideBar extends React.Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, title } = this.props;
     return (
       <div className="side-bar">
         <div className="side-bar__title-container">
-          <div className="side-bar__title-container--value">TITULO SIDEBAR</div>
+          <div className="side-bar__title-container--value">{title}</div>
         </div>
         <div className="side-bar__search-container">
           <div className="side-bar__search-container--input">
