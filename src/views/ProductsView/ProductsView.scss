@@ -1,21 +1,21 @@
-#users-view {
+#products-view {
   display: flex;
   height: calc(100vh - 50px);
   box-sizing: border-box;
 }
 
-.users-view__side-bar {
+.products-view__side-bar {
   width: 25%;
   min-width: 250px;
   max-width: 270px;
 
-  & .users-view__side-bar__title {
+  & .products-view__side-bar__title {
     font-size: 22px;
     font-weight: 400;
     color: #002448;
   }
 
-  & .users-view__side-bar__filter-and-order {
+  & .products-view__side-bar__filter-and-order {
     display: flex;
     flex-direction: column;
     margin: 6px 0 0 0;
@@ -25,7 +25,7 @@
       font-weight: 500;
     }
 
-    & .users-view__side-bar__filter-and-order__filter {
+    & .products-view__side-bar__filter-and-order__filter {
       font-size: 16px;
       font-weight: 300;
       text-decoration: underline;
@@ -36,28 +36,28 @@
   }
 }
 
-.users-view__users-container {
+.products-view__products-container {
+  display: flex;
   width: 75%;
   height: 100%;
   overflow: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 5px 0;
 }
 
-.users-view__users-grid {
+.products-view__products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   grid-auto-rows: minmax(min-content, max-content);
   grid-gap: 14px;
   justify-content: center;
-  align-content: center;
   width: 100%;
   box-sizing: border-box;
+  padding: 5px 0;
 
-  & .users-view__users-grid__item {
+  & > .products-view__products-grid__item {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-content: center;
   }
 }

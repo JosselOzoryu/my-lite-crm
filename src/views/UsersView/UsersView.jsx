@@ -16,7 +16,11 @@ class UsersView extends React.Component {
   }
   renderUsers = () => {
     return this.state.data.map(user => {
-      return <UserCard user={user} />;
+      return (
+        <div className="users-view__users-grid__item">
+          <UserCard user={user} />
+        </div>
+      );
     });
   };
 
@@ -38,15 +42,62 @@ class UsersView extends React.Component {
     }
   };
 
+  orderUsers = (property, order) => {
+    const users = [...this.state.data];
+    users.sort((a, b) => {
+      if (a[property] < b[property]) {
+        if (order === "asc") {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      if (a[property] > b[property]) {
+        if (order === "asc") {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      return 0;
+    });
+    this.setState({ data: users });
+  };
+
+  clearOrder = () => {
+    this.setState({ data: users });
+  };
+
   render() {
     return (
       <section id="users-view">
         <div className="users-view__side-bar">
-          <SideBar onSearch={this.filterUsers}>
-            esta vista es una pistola
+          <SideBar
+            onSearch={this.filterUsers}
+            title={<h1 className="users-view__side-bar__title">Usuarios</h1>}
+          >
+            <div className="users-view__side-bar__filter-and-order">
+              <h2>Ordenar por:</h2>
+              <span
+                className="users-view__side-bar__filter-and-order__filter"
+                onClick={() => {
+                  this.orderUsers("name", "asc");
+                }}
+              >
+                Nombre - asc
+              </span>
+              <span
+                className="users-view__side-bar__filter-and-order__filter"
+                onClick={() => {
+                  this.orderUsers("name", "desc");
+                }}
+              >
+                Nombre - desc
+              </span>
+            </div>
           </SideBar>
         </div>
-        <div className="users-view__users-comtainer">
+        <div className="users-view__users-container">
           <div className="users-view__users-grid">{this.renderUsers()}</div>
         </div>
       </section>
