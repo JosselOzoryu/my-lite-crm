@@ -1,0 +1,54 @@
+.product-registry__form {
+  width: 300px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.product-registry__fieldset {
+  position: relative;
+  border: none;
+}
+
+.product-registry__label {
+  position: absolute;
+  top: 18px;
+  color: rgba(0, 0, 0, 0.3);
+  transform-origin: left;
+  transition: all 0.3s ease;
+}
+
+.product-registry__input:focus ~ label {
+  color: red;
+}
+
+.product-registry__input:focus ~ label,
+.product-registry__input:valid ~ label {
+  top: 0;
+  transform: scale(0.6, 0.6);
+}
+
+.product-registry__input {
+  font-size: 20px;
+  width: 100%;
+  border: none;
+  margin-top: 10px;
+}
+
+.product-registry__input:focus {
+  outline: none;
+}
+
+.after {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, red 50%, transparent 50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: all 0.6s ease;
+}
+
+.product-registry__input:focus ~ .after {
+  background-position: 0 0;
+}
