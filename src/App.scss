@@ -14,6 +14,12 @@ body {
   padding: 0 16px;
   background-color: #1e88e5;
 
+  & .app-navbar__logo {
+    font-family: "Expletus Sans";
+    color: #fff;
+    text-shadow: -2px 3px 4px rgba(0, 0, 0, 0.5);
+  }
+
   & .app-navbar__nav-items {
     display: flex;
     justify-content: space-evenly;
