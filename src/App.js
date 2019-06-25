@@ -16,9 +16,11 @@ function App () {
             My Lite CRM
           </div>
           <div className='app-bar__nav-items'>
-            <Link className='app-navbar__nav-items__nav-item' to='/users'> Usuarios
+            2<Link className='app-navbar__nav-items__nav-item' to='/users'> Usuarios
             </Link>
             <Link className='app-navbar__nav-items__nav-item' to='/products'> Productos
+            </Link>
+            <Link className='app-navbar__nav-items__nav-item' to='/products/add'> AgregarProductos
             </Link>
           </div>
         </nav>
