@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react";
+import { Link } from "react-router-dom";
 
 import "./DropdownMenu.scss";
 
@@ -10,51 +10,41 @@ class DropdownMenu extends React.Component {
     this.state = {
       displayMenu: false
     };
-
-    /* this.showDropdownMenu = this.showDropdownMenu.bind(this);
-    this.hideDropdownMenu = this.hideDropdownMenu.bind(this); */
   }
 
-  showDropdownMenu = event => {
-    event.preventDefault();
-    this.setState({ displayMenu: true }, () => {
-      document.addEventListener("click", this.hideDropdownMenu);
-    });
-  };
-
-  hideDropdownMenu = () => {
-    this.setState({ displayMenu: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenu);
-    });
+  handleMenuState = event => {
+    console.log(event);
+    this.setState({ displayMenu: !this.state.displayMenu });
   };
 
   render() {
     return (
-      <div className="dropdown" style={{ background: "red", width: "200px" }}>
-        <div className="button" onClick={this.showDropdownMenu}>
-          {" "}
-          My Setting{" "}
+      <div className="dropdown">
+        <div className="button" onClick={this.handleMenuState}>
+          {" Menu "}
         </div>
 
         {this.state.displayMenu ? (
           <ul>
-            <li>
-              <Link to="/users">1</Link>
-            </li>
-            <li>
-              <Link to="/products">2</Link>
-            </li>
-            <li>
-              <Link to="/products/add">3</Link>
-            </li>
-            {/*             <li>
-              <Link to="/sign-in" component={SigIn} />
-            </li> */}
+            <Link className="dropdown__link" to="/users">
+              Usuarios
+            </Link>
+            <Link className="dropdown__link" to="/products">
+              Productos
+            </Link>
+            <Link className="dropdown__link" to="/products/add">
+              Agregar Productos
+            </Link>
+            <Link className="dropdown__link" to="/sing-in">
+              Log In
+            </Link>
             <li>
               <a href="#Log Out">Log Out</a>
             </li>
           </ul>
-        ) : null}
+        ) : (
+          <React.Fragment />
+        )}
       </div>
     );
   }
