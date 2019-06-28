@@ -7,13 +7,14 @@ import config from "./fire";
 
 import UserView from "views/UsersView";
 import ProductsView from "views/ProductsView";
-import ProductRegistryView from 'views/ProductRegistryView'
+import ProductRegistryView from "views/ProductRegistryView";
 import SigIn from "./components/SignIn";
 
-import './App.scss'
-import './reset.scss'
+import "./App.scss";
+import "./reset.scss";
+import DropdownMenu from "./components/DropdownMenu";
 
-function App () {
+function App() {
   return (
     <Router>
       <FirebaseAuthProvider firebase={firebase} {...config}>
@@ -21,7 +22,8 @@ function App () {
           <nav className="app-navbar">
             <div className="app-navbar__logo">My Lite CRM</div>
             <div className="app-bar__nav-items">
-              <Link className="app-navbar__nav-items__nav-item" to="/users">
+              <DropdownMenu />
+              {/* <Link className="app-navbar__nav-items__nav-item" to="/users">
                 Usuarios
               </Link>
               <Link className="app-navbar__nav-items__nav-item" to="/products">
@@ -32,18 +34,18 @@ function App () {
               </Link>
               <Link className="app-navbar__nav-items__nav-item" to="/sign-in">
                 Sign In
-              </Link>
+              </Link> */}
             </div>
           </nav>
           <Route exact path="/" component={UserView} />
           <Route exact path="/users" component={UserView} />
           <Route exact path="/products" component={ProductsView} />
-          <Route exact path='/products/add' component={ProductRegistryView} />
+          <Route exact path="/products/add" component={ProductRegistryView} />
           <Route exact path="/sign-in" component={SigIn} />
         </div>
       </FirebaseAuthProvider>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
