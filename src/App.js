@@ -7,13 +7,14 @@ import config from "./fire";
 
 import UserView from "views/UsersView";
 import ProductsView from "views/ProductsView";
+import ProductRegistryView from 'views/ProductRegistryView'
 import SigIn from "./components/SignIn";
 
 import "./App.scss";
 import "./styles/reset.scss";
 import "./styles/grid.scss";
 
-function App() {
+function App () {
   return (
     <Router>
       <FirebaseAuthProvider firebase={firebase} {...config}>
@@ -27,6 +28,9 @@ function App() {
               <Link className="app-navbar__nav-items__nav-item" to="/products">
                 Productos
               </Link>
+              <Link className='app-navbar__nav-items__nav-item' to='/products/add'>
+                AgregarProductos
+              </Link>
               <Link className="app-navbar__nav-items__nav-item" to="/sign-in">
                 Sign In
               </Link>
@@ -35,11 +39,12 @@ function App() {
           <Route exact path="/" component={UserView} />
           <Route exact path="/users" component={UserView} />
           <Route exact path="/products" component={ProductsView} />
+          <Route exact path='/products/add' component={ProductRegistryView} />
           <Route exact path="/sign-in" component={SigIn} />
         </div>
       </FirebaseAuthProvider>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
