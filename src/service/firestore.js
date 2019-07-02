@@ -15,9 +15,13 @@ class firebaseService {
   getUserFromDb = (email) => {
     return new Promise((resolve, reject) => {
       try {
+        const userList = [];
         const usersRef = this.db.collection("users");
         var query = usersRef.where("email", "==", email.toString());
-        resolve(query.get());
+        query.get().forEach((user) => {
+          userList.push(user);
+        })
+        resolve(userList);
       } catch (error) {
         reject(error);
       }
@@ -27,11 +31,19 @@ class firebaseService {
 
   userSignIn = (email, password) => {
     return new Promise((resolve, reject) => {
-      firebaseApp.auth().signInWithEmailAndPassword(email, password).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
+      const userList = this.getUserFromDb(email).then((userList) => userList).catch((userError) => {
+        reject(userError);
       })
+
+      if (userList.length !== 0) {
+        firebaseApp.auth().signInWithEmailAndPassword(email, password).then((response) => {
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+      } else {
+        reject({ code: 404, error: "User not in DB" });
+      }
     });
   }
 

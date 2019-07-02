@@ -2,6 +2,9 @@ import React from "react";
 import { FirebaseAuthConsumer } from "@react-firebase/auth";
 import firebaseService from "service/firestore";
 
+import Logo from 'components/common/Logo';
+import Button from 'components/common/Button';
+
 import "./SignIn.scss";
 
 class SignIn extends React.Component {
@@ -15,21 +18,10 @@ class SignIn extends React.Component {
     }
   }
 
-
-  addAuthUserToDb = (result) => {
-    console.log(result);
-  }
-
   authenticateUser = () => {
     const { email, password } = this.state;
     firebaseService.userSignIn(email, password).then((response) => {
-      firebaseService.getUserFromDb(email).then((querySnapshot) => {
-        querySnapshot.forEach((userObj) => {
-          console.log(userObj.data())
-        })
-      }).catch((e) => {
-        console.error(e);
-      })
+
     }).catch((error) => {
       alert(error);
     });
@@ -66,16 +58,18 @@ class SignIn extends React.Component {
           } else {
             return (
               <div className="mlc-login">
-                <span className="mlc-login__logo">My Lite Manager</span>
+                <Logo className="mlc-login__logo" width="65px" height="35px" />
                 <p className="mlc-login__welcome-message">
                   Inicia sesión con tu cuenta.
                 </p>
                 <div>
                   <input name="email" type="text" onChange={this.handleInputs} value={email} />
                   <input name="password" type="password" onChange={this.handleInputs} value={password} />
-                  <button type="button" className="google-button" onClick={this.authenticateUser}>
-                    Sign In
-                  </button>
+                  <Button
+                    className="mlc-login__button"
+                    label="Sign In"
+                    action={this.authenticateUser}
+                  />
                 </div>
               </div>
             );
