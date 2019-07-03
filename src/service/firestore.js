@@ -12,6 +12,28 @@ class firebaseService {
     this.db.collection("users").add(user);
   }
 
+  getUsers = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const users = [];
+        this.db.collection("users")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach(function (doc) {
+              users.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(users);
+          })
+          .catch((queryError) => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   getUserFromDb = (email) => {
     return new Promise((resolve, reject) => {
       try {

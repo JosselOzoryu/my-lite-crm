@@ -1,18 +1,18 @@
 //Core imports
 import React from "react";
+import firestore from 'service/firestore';
 
 import UserCard from "components/UserCard";
 import SideBar from "components/SideBar";
 
 import "./UsersView.scss";
 
-import users from "users";
-
 class UsersView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: users };
+    this.state = { data: [] };
+    this.originalData = [];
   }
   renderUsers = () => {
     return this.state.data.map(user => {
@@ -26,19 +26,18 @@ class UsersView extends React.Component {
 
   filterUsers = searchTerm => {
     if (searchTerm === "") {
-      this.setState({ data: users });
+      this.setState({ data: this.originalData });
     } else {
-      const result = users.filter(user => {
+      const result = this.originalData.filter(user => {
         return (
+          user.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.middle_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.role.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
       this.setState({ data: result });
-      console.log(result);
     }
   };
 
@@ -65,8 +64,17 @@ class UsersView extends React.Component {
   };
 
   clearOrder = () => {
-    this.setState({ data: users });
+    this.setState({ data: this.originalData });
   };
+
+  componentDidMount = () => {
+    firestore.getUsers().then((users) => {
+      this.setState({ data: users });
+      this.originalData = users;
+    }).catch((error) => {
+      console.error(error);
+    })
+  }
 
   render() {
     return (
