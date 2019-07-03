@@ -6,8 +6,8 @@
 
 .users-view__side-bar {
   width: 25%;
-  min-width: 250px;
-  max-width: 270px;
+  min-width: 200px;
+  max-width: 200px;
 
   & .users-view__side-bar__title {
     font-size: 22px;
@@ -42,7 +42,7 @@
   overflow: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 5px 0;
+  padding: 1em;
 }
 
 .users-view__users-grid {
