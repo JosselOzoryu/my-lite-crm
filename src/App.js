@@ -8,12 +8,13 @@ import config from "./fire";
 import UserView from "views/UsersView";
 import ProductsView from "views/ProductsView";
 import ProductRegistryView from "views/ProductRegistryView";
+
 import SigIn from "./components/SignIn";
+import DropdownMenu from "./components/DropdownMenu";
 
 import "./App.scss";
 import "./styles/reset.scss";
 import "./styles/grid.scss";
-import DropdownMenu from "./components/DropdownMenu";
 
 function App() {
   return (
