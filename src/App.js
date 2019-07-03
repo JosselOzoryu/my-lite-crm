@@ -13,7 +13,7 @@ import SigIn from "./components/SignIn";
 import "./App.scss";
 import "./styles/reset.scss";
 import "./styles/grid.scss";
-import "./reset.scss";
+import "./styles/reset.scss";
 import DropdownMenu from "./components/DropdownMenu";
 
 function App() {
