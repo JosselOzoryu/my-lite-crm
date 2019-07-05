@@ -3,7 +3,9 @@ import { FirebaseAuthConsumer } from "@react-firebase/auth";
 import firebaseService from "service/firestore";
 
 import Logo from 'components/common/Logo';
-import Button from 'components/common/Button';
+// import Button from 'components/common/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import "./SignIn.scss";
 
@@ -62,15 +64,37 @@ class SignIn extends React.Component {
                 <p className="mlc-login__welcome-message">
                   Inicia sesión con tu cuenta.
                 </p>
-                <div>
-                  <input name="email" type="text" onChange={this.handleInputs} value={email} />
-                  <input name="password" type="password" onChange={this.handleInputs} value={password} />
-                  <Button
+                <form className="mlc-login__form" action="">
+                  <TextField
+                    required
+                    id="standard-name"
+                    label="Email"
+                    value={email}
+                    onChange={this.handleInputs}
+                    margin="normal"
+                    variant="outlined"
+                    name="email"
+                  />
+                  <TextField
+                    required
+                    id="standard-name"
+                    label="Password"
+                    value={password}
+                    onChange={this.handleInputs}
+                    margin="normal"
+                    variant="outlined"
+                    name="password"
+                    type="password"
+                  />
+                  <Button variant="contained" onClick={this.authenticateUser}>
+                    Sign In
+                  </Button>
+                  {/* <Button
                     className="mlc-login__button"
                     label="Sign In"
-                    action={this.authenticateUser}
-                  />
-                </div>
+                    action={}
+                  /> */}
+                </form>
               </div>
             );
           }

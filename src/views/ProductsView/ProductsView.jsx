@@ -17,7 +17,7 @@ class ProductsView extends React.Component {
   renderProducts = () => {
     return this.state.data.map(product => {
       return (
-        <div className="products-view__products-grid__item">
+        <div className="products-view__products-grid__item" key={product.id}>
           <ProductCard product={product} />
         </div>
       );

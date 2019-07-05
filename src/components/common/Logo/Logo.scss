@@ -1,39 +1,9 @@
 .mlc-animated-logo {
-  position: relative;
-  // top: 50%;
-  transform: translateY(-50%);
-  margin: 0 auto;
-  width: 500px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Expletus Sans";
 
-  & > svg > .shape1,
-  & > svg > .shape2 {
-    stroke-dasharray: 1120;
-    stroke-width: 5px;
-    fill: transparent;
-    stroke: #002448;
-    border-bottom: 5px solid black;
-    transition-timing-function: linear;
-    transition: stroke-dashoffset 4s, stroke-dasharray 4s;
 
-    &:hover {
-      stroke-dashoffset: 0;
-      stroke-dasharray: 1120;
-    }
-  }
-  & > svg > .shape1 {
-    stroke-dashoffset: 1120;
-  }
-  & > svg > .shape2 {
-    stroke-dashoffset: -1120;
-  }
-  & > svg > .text {
-    font-family: "Expletus Sans";
-    font-size: 22px;
-    line-height: 32px;
-    letter-spacing: 8px;
-    top: -48px;
-    position: relative;
-    color: #000;
-  }
 
 }

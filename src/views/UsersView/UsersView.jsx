@@ -17,7 +17,7 @@ class UsersView extends React.Component {
   renderUsers = () => {
     return this.state.data.map(user => {
       return (
-        <div className="users-view__users-grid__item">
+        <div className="users-view__users-grid__item" key={user.id}>
           <UserCard user={user} />
         </div>
       );
