@@ -9,8 +9,8 @@ import UserView from "views/UsersView";
 import ProductsView from "views/ProductsView";
 import AddProductView from "views/AddProductView";
 
-import SigIn from "./components/SignIn";
-import AppNav from 'components/AppNav';
+import SignIn from "./components/SignIn";
+import AppNav from "components/AppNav";
 
 import "./App.scss";
 import "./styles/reset.scss";
@@ -27,7 +27,7 @@ function App() {
             <Route exact path="/users" component={UserView} />
             <Route exact path="/products" component={ProductsView} />
             <Route exact path="/products/add" component={AddProductView} />
-            <Route exact path="/sign-in" component={SigIn} />
+            <Route exact path="/sign-in" component={SignIn} />
           </div>
         </div>
       </FirebaseAuthProvider>

@@ -35,7 +35,7 @@ class DropdownMenu extends React.Component {
             <Link className="dropdown__link" to="/products/add">
               Agregar Productos
             </Link>
-            <Link className="dropdown__link" to="/sing-in">
+            <Link className="dropdown__link" to="/sign-in">
               Log In
             </Link>
             <li>
