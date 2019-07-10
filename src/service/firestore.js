@@ -76,8 +76,17 @@ class firebaseService {
       }).catch((error) => {
         reject(error);
       })
-    })
+    });
+  }
 
+
+  // Productos
+
+
+  getProducts = () => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("products")
+    });
   }
 
 }
