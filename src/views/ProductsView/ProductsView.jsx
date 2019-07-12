@@ -73,7 +73,7 @@ class ProductsView extends React.Component {
 
   componentDidMount = () => {
     firestore
-      .getProductsFromDB()
+      .getProducts()
       .then(products => {
         this.setState({ data: products });
         this.originalData = products;
