@@ -1,5 +1,6 @@
 //Core imports
 import React from "react";
+import firestore from "service/firestore";
 
 import ProductCard from "components/ProductCard";
 import SideBar from "components/SideBar";
@@ -12,12 +13,13 @@ class ProductsView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: products };
+    this.state = { data: [] };
+    this.originalData = [];
   }
   renderProducts = () => {
     return this.state.data.map(product => {
       return (
-        <div className="products-view__products-grid__item" key={product.id}>
+        <div className="products-view__products-grid__item">
           <ProductCard product={product} />
         </div>
       );
@@ -67,6 +69,19 @@ class ProductsView extends React.Component {
 
   clearOrder = () => {
     this.setState({ data: products });
+  };
+
+  componentDidMount = () => {
+    firestore
+      .getProductsFromDB()
+      .then(products => {
+        this.setState({ data: products });
+        this.originalData = products;
+        console.log(products);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   render() {

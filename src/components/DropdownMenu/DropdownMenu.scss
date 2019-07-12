@@ -6,6 +6,7 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  border: 1px solid #ddd;
   top: 45px;
   right: 0px;
   width: 200px;
@@ -28,6 +29,10 @@ a {
 li:hover {
   background-color: gray;
   color: white;
+}
+ul li {
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
 }
 .button {
   width: 178px;

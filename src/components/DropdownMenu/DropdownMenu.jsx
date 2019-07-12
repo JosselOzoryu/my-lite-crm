@@ -26,18 +26,26 @@ class DropdownMenu extends React.Component {
 
         {this.state.displayMenu ? (
           <ul>
-            <Link className="dropdown__link" to="/users">
-              Usuarios
-            </Link>
-            <Link className="dropdown__link" to="/products">
-              Productos
-            </Link>
-            <Link className="dropdown__link" to="/products/add">
-              Agregar Productos
-            </Link>
-            <Link className="dropdown__link" to="/sign-in">
-              Log In
-            </Link>
+            <li>
+              <Link className="dropdown__link" to="/users">
+               Usuarios
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown__link" to="/products">
+               Productos
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown__link" to="/products/add">
+               Agregar Productos
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown__link" to="/sign-in">
+               Log In
+              </Link>
+            </li>
             <li>
               <a href="#Log Out">Log Out</a>
             </li>
