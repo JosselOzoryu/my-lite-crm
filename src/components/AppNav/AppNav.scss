@@ -1,0 +1,39 @@
+.mla-app-bar {
+  min-height: 50px;
+}
+
+.mla-app-bar__drawer > .MuiDrawer-paper{
+  padding: 1em 8px;
+}
+
+.mla-app-bar__menu-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20px;
+  margin: 8px 0;
+  padding: 0 0 8px 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  font-family: "Montserrat";
+
+  & .MuiSvgIcon-root {
+    background-color: #3F51B5;
+    border-radius: 50%;
+    padding: 4px;
+    color: #fff;
+    margin: 0 4px 0 0;
+    border: 1px solid #FFF;
+  }
+
+  &:hover {
+
+    & .MuiSvgIcon-root {
+      transition: border color background-color 0.4;
+      background-color: #FFF;
+      color: #3F51B5;
+      border: 1px solid #3F51B5;
+    }
+  }
+}

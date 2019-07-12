@@ -1,0 +1,9 @@
+.mla-add-product-form {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+
+  & > .mla-add-product-form__form-row {
+    display: flex;
+  }
+}
