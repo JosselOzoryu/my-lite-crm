@@ -85,10 +85,26 @@ class firebaseService {
 
   getProducts = () => {
     return new Promise((resolve, reject) => {
-      this.db.collection("products")
+      try {
+        const products = [];
+        this.db.collection("products")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach(function (doc) {
+              products.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(products);
+          })
+          .catch((queryError) => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
+        reject(error);
+      }
     });
   }
-
+  
   addProduct = ({ description, image, name, price, vendor }) => {
     return new Promise((resolve, reject) => {
       this.db.collection("products").doc("").set({
@@ -101,7 +117,6 @@ class firebaseService {
     })
 
   }
-
 }
 
 const fireBaseSingleton = Object.freeze(new firebaseService());

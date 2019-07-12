@@ -1,13 +1,13 @@
 #users-view {
   display: flex;
-  height: calc(100vh - 50px);
+  height: 100%;
   box-sizing: border-box;
 }
 
 .users-view__side-bar {
   width: 25%;
-  min-width: 250px;
-  max-width: 270px;
+  min-width: 200px;
+  max-width: 200px;
 
   & .users-view__side-bar__title {
     font-size: 22px;
@@ -37,12 +37,12 @@
 }
 
 .users-view__users-container {
-  width: 75%;
+  width: 100%;
   height: 100%;
   overflow: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 5px 0;
+  padding: 1em;
 }
 
 .users-view__users-grid {

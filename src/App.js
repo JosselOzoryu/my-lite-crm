@@ -1,30 +1,36 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { FirebaseAuthProvider } from "@react-firebase/auth";
+import firebase from "firebase/app";
+import "firebase/auth";
+import config from "./fire";
+
 import UserView from "views/UsersView";
 import ProductsView from "views/ProductsView";
+import AddProductView from "views/AddProductView";
+
+import SignIn from "./components/SignIn";
+import AppNav from "components/AppNav";
 
 import "./App.scss";
-import "./reset.scss";
+import "./styles/reset.scss";
+import "./styles/grid.scss";
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <nav className="app-navbar">
-          <div className="app-navbar__logo">My Lite CRM</div>
-          <div className="app-bar__nav-items">
-            <Link className="app-navbar__nav-items__nav-item" to="/users">
-              Usuarios
-            </Link>
-            <Link className="app-navbar__nav-items__nav-item" to="/products">
-              Productos
-            </Link>
+      <FirebaseAuthProvider firebase={firebase} {...config}>
+        <div className="App">
+          <AppNav />
+          <div className="mla-app__content">
+            <Route exact path="/" component={UserView} />
+            <Route exact path="/users" component={UserView} />
+            <Route exact path="/products" component={ProductsView} />
+            <Route exact path="/products/add" component={AddProductView} />
+            <Route exact path="/sign-in" component={SignIn} />
           </div>
-        </nav>
-        <Route exact path="/" component={UserView} />
-        <Route exact path="/users" component={UserView} />
-        <Route exact path="/products" component={ProductsView} />
-      </div>
+        </div>
+      </FirebaseAuthProvider>
     </Router>
   );
 }
