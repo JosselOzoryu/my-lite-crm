@@ -88,7 +88,19 @@ class firebaseService {
       this.db.collection("products")
     });
   }
+  
+  addProduct = ({ description, image, name, price, vendor }) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("products").doc("").set({
+        description, image, name, price, vendor
+      }).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+      })
+    })
 
+  }
 }
 
 const fireBaseSingleton = Object.freeze(new firebaseService());
