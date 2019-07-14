@@ -1,13 +1,13 @@
 #products-view {
   display: flex;
-  height: calc(100vh - 50px);
+  height: 100%;
   box-sizing: border-box;
 }
 
 .products-view__side-bar {
   width: 25%;
-  min-width: 250px;
-  max-width: 270px;
+  min-width: 200px;
+  max-width: 200px;
 
   & .products-view__side-bar__title {
     font-size: 22px;
@@ -37,12 +37,12 @@
 }
 
 .products-view__products-container {
-  display: flex;
-  width: 75%;
+  width: 100%;
   height: 100%;
   overflow: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
+  padding: 1em;
 }
 
 .products-view__products-grid {
@@ -55,7 +55,7 @@
   box-sizing: border-box;
   padding: 5px 0;
 
-  & > .products-view__products-grid__item {
+  &>.products-view__products-grid__item {
     display: flex;
     justify-content: center;
     align-content: center;
