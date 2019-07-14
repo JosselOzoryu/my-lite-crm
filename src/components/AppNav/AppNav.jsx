@@ -9,7 +9,8 @@ import {
   Menu as MenuIcon,
   Person as PersonIcon,
   LocalOffer as LocalOfferIcon,
-  NoteAdd as NoteAddIcon
+  NoteAdd as NoteAddIcon,
+  Build as BuildIcon
 } from "@material-ui/icons/";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -68,6 +69,10 @@ export default class AppNav extends Component {
             <Link className="mla-app-bar__menu-item" to="/products/add">
               <NoteAddIcon />
               Agregar Productos
+            </Link>
+            <Link className="mla-app-bar__menu-item" to="/services">
+              <BuildIcon />
+              Services
             </Link>
             <Link className="mla-app-bar__menu-item" to="/sign-in">
               Log In
