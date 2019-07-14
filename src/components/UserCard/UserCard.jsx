@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 
 //Components
+import Card from '@material-ui/core/Card';
 
 //Styling imports
 import "./UserCard.scss";
@@ -11,7 +12,7 @@ class UserCard extends React.Component {
   render() {
     const { avatar, id, name, last_name, birthday, email, role } = this.props.user;
     return (
-      <div className="user-card">
+      <Card className="user-card">
         <div className="user-card__row justify-center align-middle">
           <img className="user-card__avatar" src={avatar} alt="user avatar" />
         </div>
@@ -56,7 +57,7 @@ class UserCard extends React.Component {
             <span>{email}</span>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 }

@@ -1,12 +1,14 @@
 import React from "react";
 
+import Card from '@material-ui/core/Card';
+
 import "./ProductCard.scss";
 
 function ProductCard(props) {
   const { product } = props;
   const { image, id, productName, vendor, price, retailPrice } = product;
   return (
-    <div className="product-card">
+    <Card className="product-card">
       {/*  Foto del producto */}
       <div className="product-card__product-image">
         <img src={image} alt="" />
@@ -46,7 +48,7 @@ function ProductCard(props) {
           </span>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 
