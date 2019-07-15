@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { DropzoneArea } from 'material-ui-dropzone'
+import Snackbar from '@material-ui/core/Snackbar';
 
 import './AddProductForm.scss';
 
@@ -18,7 +19,32 @@ export default class AddProductForm extends Component {
       vendor: '',
       description: '',
       image: null,
+      snackBar: {
+        open: false,
+        variant: '',
+        message: ''
+      }
     }
+  }
+
+  openSnackBar = (variant, message) => {
+    this.setState({
+      snackBar: {
+        open: true,
+        variant,
+        message,
+      }
+    });
+  }
+
+  closeSnackBar = () => {
+    this.setState({
+      snackBar: {
+        open: false,
+        variant: '',
+        message: '',
+      }
+    });
   }
 
   handleInputs = (event) => {
@@ -27,26 +53,25 @@ export default class AddProductForm extends Component {
   }
 
   handleFileUpload = (file) => {
-    console.log(file);
-    let myBlob = new Blob(file, { type: file[0].type });
-    let myReader = new FileReader();
-    //handler executed once reading(blob content referenced to a variable) from blob is finished. 
-    myReader.addEventListener("loadend", (result) => {
-      console.log(result.srcElement.result);
-      this.setState({ image: result.srcElement.result })
-    });
-    //start the reading process.
-    myReader.readAsText(myBlob);
-
+    this.setState({ image: file[0] });
+    console.log(file[0]);
   }
 
   onAddProduct = () => {
     const { description, image, name, price, vendor } = this.state;
-    firestore.addProduct({ description, image, name, price, vendor });
+    firestore.uploadImage(image).then((imageUrl) => {
+      firestore.addProduct({ description, image: imageUrl, name, price, vendor }).then((response) => {
+        this.props.onClose();
+        this.openSnackBar('success', 'Producto agregado con éxito');
+      }).catch(error => {
+        this.openSnackBar('error', error.toString());
+      });
+    })
+
   }
 
   render() {
-    const { name, price, vendor, description } = this.state;
+    const { name, price, vendor, description, snackbarIsOpen } = this.state;
     return (
       <Card className="mla-add-product-form">
         <TextField
@@ -101,7 +126,12 @@ export default class AddProductForm extends Component {
 
         <Button variant="contained" color="primary" onClick={this.onAddProduct}>
           Registrar
-          </Button>
+        </Button>
+        <Snackbar
+          open={snackbarIsOpen}
+          autoHideDuration={6000}
+          onClose={this.closeSnackBar}>
+        </Snackbar>
       </Card>
     )
   }

@@ -122,8 +122,9 @@ class firebaseService {
 
   // Images 
   uploadImage = (image) => {
+    console.log(image);
     return new Promise((resolve, reject) => {
-      let storageRef = this.storage.ref();
+      let storageRef = this.storage.ref(image.name);
       storageRef.put(image).then((snapshot) => {
         resolve(snapshot.ref.getDownloadURL())
       }).catch((error) => {
