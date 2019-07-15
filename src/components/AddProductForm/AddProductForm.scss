@@ -1,9 +1,23 @@
 .mla-add-product-form {
   display: flex;
   flex-direction: column;
+  width: 80%;
   padding: 8px;
+  padding: 0.5em;
+  outline: none;
 
   & > .mla-add-product-form__form-row {
     display: flex;
+    flex-wrap: wrap;
+  }
+
+  & > .mla-add-product-form__dropzone-title {
+    font-family: "Roboto";
+    margin: 0 0 8px 0;
+  }
+
+  & > .mla-add-product-form__dropzone {
+    min-height: 70px;
+    margin: 0 0 16px 0;
   }
 }
