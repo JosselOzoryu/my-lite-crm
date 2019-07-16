@@ -2,24 +2,26 @@
 import React from "react";
 import firestore from "service/firestore";
 
+import Modal from '@material-ui/core/Modal';
+import AddProductForm from 'components/AddProductForm';
 import ProductCard from "components/ProductCard";
 import SideBar from "components/SideBar";
+import Fab from '@material-ui/core/Fab';
+import { Add as AddIcon } from '@material-ui/icons';
 
 import "./ProductsView.scss";
-
-import products from "products";
 
 class ProductsView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: [] };
     this.originalData = [];
+    this.state = { data: [], modalIsOpen: false };
   }
   renderProducts = () => {
     return this.state.data.map(product => {
       return (
-        <div className="products-view__products-grid__item">
+        <div className="products-view__products-grid__item" key={product.id}>
           <ProductCard product={product} />
         </div>
       );
@@ -28,20 +30,19 @@ class ProductsView extends React.Component {
 
   filterProducts = searchTerm => {
     if (searchTerm === "") {
-      this.setState({ data: products });
+      this.setState({ data: this.originalData });
     } else {
-      const result = products.filter(products => {
+      const result = this.originalData.filter(product => {
         return (
-          products.productName
+          product.productName
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
-          products.vendor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          products.price.toString().includes(searchTerm.toLowerCase()) ||
-          products.retailPrice.toString().includes(searchTerm.toLowerCase())
+          product.vendor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.price.toString().includes(searchTerm.toLowerCase()) ||
+          product.retailPrice.toString().includes(searchTerm.toLowerCase())
         );
       });
       this.setState({ data: result });
-      console.log(result);
     }
   };
 
@@ -68,7 +69,7 @@ class ProductsView extends React.Component {
   };
 
   clearOrder = () => {
-    this.setState({ data: products });
+    this.setState({ data: this.originalData });
   };
 
   componentDidMount = () => {
@@ -77,88 +78,116 @@ class ProductsView extends React.Component {
       .then(products => {
         this.setState({ data: products });
         this.originalData = products;
-        console.log(products);
       })
       .catch(error => {
         console.error(error);
       });
   };
 
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  }
+
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+  }
+
   render() {
+    const { modalIsOpen } = this.state;
     return (
-      <section id="products-view">
-        <div className="products-view__side-bar">
-          <SideBar
-            onSearch={this.filterProducts}
-            title={
-              <h1 className="products-view__side-bar__title">Productos</h1>
-            }
-          >
-            <div className="products-view__side-bar__filter-and-order">
-              <h2>Ordenar por:</h2>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderProducts("productName", "asc");
-                }}
-              >
-                Nombre - asc
+      <React.Fragment>
+        <section id="products-view">
+          <div className="products-view__side-bar">
+            <SideBar
+              onSearch={this.filterProducts}
+              title={
+                <h1 className="products-view__side-bar__title">Productos</h1>
+              }
+            >
+              <div className="products-view__side-bar__filter-and-order">
+                <h2>Ordenar por:</h2>
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderProducts("productName", "asc");
+                  }}
+                >
+                  Nombre - asc
               </span>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderProducts("productName", "desc");
-                }}
-              >
-                Nombre - desc
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderProducts("productName", "desc");
+                  }}
+                >
+                  Nombre - desc
               </span>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderProducts("price", "asc");
-                }}
-              >
-                Precio - asc
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderProducts("price", "asc");
+                  }}
+                >
+                  Precio - asc
               </span>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderProducts("price", "desc");
-                }}
-              >
-                Precio - desc
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderProducts("price", "desc");
+                  }}
+                >
+                  Precio - desc
               </span>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderProducts("retailPrice", "asc");
-                }}
-              >
-                Precio al público - asc
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderProducts("retailPrice", "asc");
+                  }}
+                >
+                  Precio al público - asc
               </span>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderProducts("retailPrice", "asc");
-                }}
-              >
-                Precio al público - desc
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderProducts("retailPrice", "asc");
+                  }}
+                >
+                  Precio al público - desc
               </span>
-              <span
-                className="products-view__side-bar__filter-and-order__filter"
-                onClick={this.clearOrder}
-              >
-                Limpiar orden
+                <span
+                  className="products-view__side-bar__filter-and-order__filter"
+                  onClick={this.clearOrder}
+                >
+                  Limpiar orden
               </span>
-            </div>
-          </SideBar>
-        </div>
-        <div className="products-view__products-container">
-          <div className="products-view__products-grid">
-            {this.renderProducts()}
+              </div>
+            </SideBar>
           </div>
-        </div>
-      </section>
+          <div className="products-view__products-container">
+            <div className="products-view__products-grid">
+              {this.renderProducts()}
+            </div>
+          </div>
+          <Fab
+            className="products-view__add-product-fab"
+            color="primary"
+            aria-label="Add"
+            onClick={this.openModal}
+          >
+            <AddIcon />
+          </Fab>
+        </section>
+        <Modal
+          className="products-view__add-product-modal"
+          aria-labelledby="modal-agregar-producto"
+          aria-describedby="Formularoi para agregar producto"
+          open={modalIsOpen}
+          disableAutoFocus={true}
+          onClose={this.closeModal}
+        >
+          <AddProductForm />
+        </Modal>
+      </React.Fragment>
     );
   }
 }

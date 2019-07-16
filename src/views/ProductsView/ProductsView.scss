@@ -60,4 +60,18 @@
     justify-content: center;
     align-content: center;
   }
+
+.products-view__add-product-fab {
+  position: absolute !important;
+  bottom: 1em;
+  right: 1em;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+}
+
+.products-view__add-product-modal {
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
