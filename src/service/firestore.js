@@ -6,6 +6,7 @@ class firebaseService {
   constructor() {
     firebaseApp.initializeApp(fireConfig);
     this.db = firebase.firestore();
+    this.storage = firebaseApp.storage();
   };
 
   addUserToDb = (user) => {
@@ -104,10 +105,10 @@ class firebaseService {
       }
     });
   }
-  
+
   addProduct = ({ description, image, name, price, vendor }) => {
     return new Promise((resolve, reject) => {
-      this.db.collection("products").doc("").set({
+      this.db.collection("products").doc(generateUID()).set({
         description, image, name, price, vendor
       }).then((response) => {
         resolve(response);
@@ -117,6 +118,29 @@ class firebaseService {
     })
 
   }
+
+
+  // Images 
+  uploadImage = (image) => {
+    console.log(image);
+    return new Promise((resolve, reject) => {
+      let storageRef = this.storage.ref(image.name);
+      storageRef.put(image).then((snapshot) => {
+        resolve(snapshot.ref.getDownloadURL())
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+}
+
+function generateUID() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let autoId = ''
+  for (let i = 0; i < 20; i++) {
+    autoId += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return autoId;
 }
 
 const fireBaseSingleton = Object.freeze(new firebaseService());
