@@ -11,9 +11,11 @@
     height: 100%;
     margin: 0 3px 0 0;
 
-    & > img {
+    & > .product-card__product-image__holder {
       width: 80px;
       height: 80px;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
   }
 }

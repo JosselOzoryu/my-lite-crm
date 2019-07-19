@@ -2,6 +2,7 @@
 import React from "react";
 
 //Components
+import Paper from '@material-ui/core/Paper';
 
 //Styling imports
 import "./SideBar.scss";
@@ -25,7 +26,7 @@ class SideBar extends React.Component {
   render() {
     const { children, title } = this.props;
     return (
-      <div className="side-bar">
+      <Paper className="side-bar">
         <div className="side-bar__title-container">
           <div className="side-bar__title-container--value">{title}</div>
         </div>
@@ -42,7 +43,7 @@ class SideBar extends React.Component {
           </div>
         </div>
         <div className="side-bar__content-container">{children}</div>
-      </div>
+      </Paper>
     );
   }
 }

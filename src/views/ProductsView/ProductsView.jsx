@@ -34,12 +34,11 @@ class ProductsView extends React.Component {
     } else {
       const result = this.originalData.filter(product => {
         return (
-          product.productName
+          product.name
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
           product.vendor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.price.toString().includes(searchTerm.toLowerCase()) ||
-          product.retailPrice.toString().includes(searchTerm.toLowerCase())
+          product.price.toString().includes(searchTerm.toLowerCase())
         );
       });
       this.setState({ data: result });
@@ -72,7 +71,7 @@ class ProductsView extends React.Component {
     this.setState({ data: this.originalData });
   };
 
-  componentDidMount = () => {
+  getProducts = () => {
     firestore
       .getProducts()
       .then(products => {
@@ -82,6 +81,10 @@ class ProductsView extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentDidMount = () => {
+    this.getProducts();
   };
 
   openModal = () => {
@@ -109,7 +112,7 @@ class ProductsView extends React.Component {
                 <span
                   className="products-view__side-bar__filter-and-order__filter"
                   onClick={() => {
-                    this.orderProducts("productName", "asc");
+                    this.orderProducts("name", "asc");
                   }}
                 >
                   Nombre - asc
@@ -117,7 +120,7 @@ class ProductsView extends React.Component {
                 <span
                   className="products-view__side-bar__filter-and-order__filter"
                   onClick={() => {
-                    this.orderProducts("productName", "desc");
+                    this.orderProducts("name", "desc");
                   }}
                 >
                   Nombre - desc
@@ -138,7 +141,7 @@ class ProductsView extends React.Component {
                 >
                   Precio - desc
               </span>
-                <span
+                {/* <span
                   className="products-view__side-bar__filter-and-order__filter"
                   onClick={() => {
                     this.orderProducts("retailPrice", "asc");
@@ -153,7 +156,7 @@ class ProductsView extends React.Component {
                   }}
                 >
                   Precio al público - desc
-              </span>
+              </span> */}
                 <span
                   className="products-view__side-bar__filter-and-order__filter"
                   onClick={this.clearOrder}
@@ -180,12 +183,12 @@ class ProductsView extends React.Component {
         <Modal
           className="products-view__add-product-modal"
           aria-labelledby="modal-agregar-producto"
-          aria-describedby="Formularoi para agregar producto"
+          aria-describedby="Formulario para agregar producto"
           open={modalIsOpen}
           disableAutoFocus={true}
-          onClose={this.closeModal}
+          onClose={() => { this.closeModal(); }}
         >
-          <AddProductForm />
+          <AddProductForm onClose={() => { this.closeModal(); this.getProducts(); }} />
         </Modal>
       </React.Fragment>
     );
