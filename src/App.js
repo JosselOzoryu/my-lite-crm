@@ -8,6 +8,8 @@ import config from "./fire";
 
 //Views import
 import UserView from "views/UsersView";
+import ClientView from "views/ClientsView";
+import AddClientView from "views/AddClientView";
 import ProductsView from "views/ProductsView";
 import AddProductView from "views/AddProductView";
 //import ServicesView from "views/ServicesView";
@@ -31,6 +33,8 @@ function App() {
           <div className="mla-app__content">
             <Route exact path="/" component={UserView} />
             <Route exact path="/users" component={UserView} />
+            <Route exact path="/clients" component={ClientView} />
+            <Route exact path="/clients/add" component={AddClientView} />
             <Route exact path="/products" component={ProductsView} />
             <Route exact path="/products/add" component={AddProductView} />
             <Route exact path="/sign-in" component={SignIn} />

@@ -1,0 +1,15 @@
+.mla-add-client-form {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px;
+  margin: auto;
+  width: 60%;
+
+  & > .mla-add-client-form__form-row {
+    display: flex;
+  }
+
+  .custom-add-button {
+  	border: 1px solid red;
+  }
+}
