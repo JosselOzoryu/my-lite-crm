@@ -43,6 +43,11 @@
   overflow-x: hidden;
   box-sizing: border-box;
   padding: 1em;
+
+  table > tbody > tr.MuiTableRow-root:hover {
+    background-color: #f2f2f2;
+    transition: all 0.3s;
+  }
 }
 
 .users-view__users-grid {

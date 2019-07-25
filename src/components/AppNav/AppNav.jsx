@@ -8,6 +8,7 @@ import TouchRipple from "@material-ui/core/ButtonBase/TouchRipple";
 import {
   Menu as MenuIcon,
   Person as PersonIcon,
+  BusinessCenter as Clients,
   LocalOffer as LocalOfferIcon,
   NoteAdd as NoteAddIcon,
   Build as BuildIcon
@@ -61,6 +62,10 @@ export default class AppNav extends Component {
             <Link className="mla-app-bar__menu-item" to="/users">
               <PersonIcon />
               Usuarios
+            </Link>
+            <Link className="mla-app-bar__menu-item" to="/clients">
+              <Clients />
+              Clientes
             </Link>
             <Link className="mla-app-bar__menu-item" to="/products">
               <LocalOfferIcon />
