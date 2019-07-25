@@ -2,28 +2,36 @@
 import React from "react";
 // Material components
 import { Link } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import clsx from 'clsx';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import firestore from 'service/firestore';
-import moment from 'moment'
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import clsx from "clsx";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import firestore from "service/firestore";
+import moment from "moment";
 // Local Components
 import SideBar from "components/SideBar";
 import "./ClientsView.scss";
 
+var clientsData = [];
 
-var clientsData = []
-
-function createClient(id: number, iduser: number, name: string, lastname: string, address: string, email: string, phone: number, creationDate: date) {
+function createClient(
+  id: number,
+  iduser: number,
+  name: string,
+  lastname: string,
+  address: string,
+  email: string,
+  phone: number,
+  creationDate: date
+) {
   return { name, lastname, address, email, phone, creationDate };
 }
 
@@ -34,12 +42,23 @@ function getRandomInt(min, max) {
 }
 
 if (JSON.parse(localStorage.getItem("clients")) === null) {
-  let data = []
+  let data = [];
   for (var i = 0; i < 5; i++) {
-    data.push(createClient(i, 0, i + 'Client', 'Dummie', 'Client Street' + i, 'client@react.com', getRandomInt(9000000000, 9999999999), moment().format('DD/MM/YYYY')))
+    data.push(
+      createClient(
+        i,
+        0,
+        i + "Client",
+        "Dummie",
+        "Client Street" + i,
+        "client@react.com",
+        getRandomInt(9000000000, 9999999999),
+        moment().format("DD/MM/YYYY")
+      )
+    );
     if (i === 4) {
-       if (JSON.parse(localStorage.getItem("clients")) === null) {
-        localStorage.setItem("clients", JSON.stringify(data))
+      if (JSON.parse(localStorage.getItem("clients")) === null) {
+        localStorage.setItem("clients", JSON.stringify(data));
       }
     }
   }
@@ -47,7 +66,6 @@ if (JSON.parse(localStorage.getItem("clients")) === null) {
 } else {
   clientsData = JSON.parse(localStorage.getItem("clients"));
 }
-
 class ClientsView extends React.Component {
   constructor(props) {
     super(props);
@@ -116,11 +134,13 @@ class ClientsView extends React.Component {
         <div className="users-view__side-bar">
           <SideBar
             onSearch={this.filterClients}
-            title={<h1 className="users-view__side-bar__title"><Link className="mla-app-bar__menu-item" to="/clients/add">
-                <Button color="primary" >
-                  Agregar cliente
-                </Button>
-              </Link></h1>}
+            title={
+              <h1 className="users-view__side-bar__title">
+                <Link className="mla-app-bar__menu-item" to="/clients/add">
+                  <Button color="primary">Agregar cliente</Button>
+                </Link>
+              </h1>
+            }
           >
             <div className="users-view__side-bar__filter-and-order">
               <h2>Ordenar por:</h2>
@@ -176,14 +196,23 @@ class ClientsView extends React.Component {
                     <TableCell>
                       <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
-                          <Grid container spacing={1} direction="column" alignItems="center">
+                          <Grid
+                            container
+                            spacing={1}
+                            direction="column"
+                            alignItems="center"
+                          >
                             <Grid item>
-                              <ButtonGroup variant="contained" size="small" aria-label="Small contained button group">
-                                <Button color="primary" >
-                                  <Icon className={clsx('fa fa-pen')} />
+                              <ButtonGroup
+                                variant="contained"
+                                size="small"
+                                aria-label="Small contained button group"
+                              >
+                                <Button color="primary">
+                                  <Icon className={clsx("fa fa-pen")} />
                                 </Button>
                                 <Button>
-                                  <Icon className={clsx('fa fa-trash')} /> 
+                                  <Icon className={clsx("fa fa-trash")} />
                                 </Button>
                               </ButtonGroup>
                             </Grid>
