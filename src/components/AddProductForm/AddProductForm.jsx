@@ -1,30 +1,33 @@
-import React, { Component } from 'react'
-import firestore from 'service/firestore';
+//Core imports
+import React, { Component } from "react";
+import firestore from "service/firestore";
 
-import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { DropzoneArea } from 'material-ui-dropzone'
-import Snackbar from '@material-ui/core/Snackbar';
+//Material UI imports
+import Card from "@material-ui/core/Card";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import { DropzoneArea } from "material-ui-dropzone";
+import Snackbar from "@material-ui/core/Snackbar";
 
-import './AddProductForm.scss';
+//Style imports
+import "./AddProductForm.scss";
 
 export default class AddProductForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      name: '',
+      name: "",
       price: 0,
-      vendor: '',
-      description: '',
+      vendor: "",
+      description: "",
       image: null,
       snackBar: {
         open: false,
-        variant: '',
-        message: ''
+        variant: "",
+        message: ""
       }
-    }
+    };
   }
 
   openSnackBar = (variant, message) => {
@@ -32,43 +35,45 @@ export default class AddProductForm extends Component {
       snackBar: {
         open: true,
         variant,
-        message,
+        message
       }
     });
-  }
+  };
 
   closeSnackBar = () => {
     this.setState({
       snackBar: {
         open: false,
-        variant: '',
-        message: '',
+        variant: "",
+        message: ""
       }
     });
-  }
+  };
 
-  handleInputs = (event) => {
+  handleInputs = event => {
     event.persist();
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
-  handleFileUpload = (file) => {
+  handleFileUpload = file => {
     this.setState({ image: file[0] });
     console.log(file[0]);
-  }
+  };
 
   onAddProduct = () => {
     const { description, image, name, price, vendor } = this.state;
-    firestore.uploadImage(image).then((imageUrl) => {
-      firestore.addProduct({ description, image: imageUrl, name, price, vendor }).then((response) => {
-        this.props.onClose();
-        this.openSnackBar('success', 'Producto agregado con éxito');
-      }).catch(error => {
-        this.openSnackBar('error', error.toString());
-      });
-    })
-
-  }
+    firestore.uploadImage(image).then(imageUrl => {
+      firestore
+        .addProduct({ description, image: imageUrl, name, price, vendor })
+        .then(response => {
+          this.props.onClose();
+          this.openSnackBar("success", "Producto agregado con éxito");
+        })
+        .catch(error => {
+          this.openSnackBar("error", error.toString());
+        });
+    });
+  };
 
   render() {
     const { name, price, vendor, description, snackbarIsOpen } = this.state;
@@ -130,9 +135,9 @@ export default class AddProductForm extends Component {
         <Snackbar
           open={snackbarIsOpen}
           autoHideDuration={6000}
-          onClose={this.closeSnackBar}>
-        </Snackbar>
+          onClose={this.closeSnackBar}
+        />
       </Card>
-    )
+    );
   }
 }

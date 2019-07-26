@@ -35,37 +35,37 @@ function createClient(
   return { name, lastname, address, email, phone, creationDate };
 }
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+// }
 
-if (JSON.parse(localStorage.getItem("clients")) === null) {
-  let data = [];
-  for (var i = 0; i < 5; i++) {
-    data.push(
-      createClient(
-        i,
-        0,
-        i + "Client",
-        "Dummie",
-        "Client Street" + i,
-        "client@react.com",
-        getRandomInt(9000000000, 9999999999),
-        moment().format("DD/MM/YYYY")
-      )
-    );
-    if (i === 4) {
-      if (JSON.parse(localStorage.getItem("clients")) === null) {
-        localStorage.setItem("clients", JSON.stringify(data));
-      }
-    }
-  }
-  clientsData = data;
-} else {
-  clientsData = JSON.parse(localStorage.getItem("clients"));
-}
+// if (JSON.parse(localStorage.getItem("clients")) === null) {
+//   let data = [];
+//   for (var i = 0; i < 5; i++) {
+//     data.push(
+//       createClient(
+//         i,
+//         0,
+//         i + "Client",
+//         "Dummie",
+//         "Client Street" + i,
+//         "client@react.com",
+//         getRandomInt(9000000000, 9999999999),
+//         moment().format("DD/MM/YYYY")
+//       )
+//     );
+//     if (i === 4) {
+//       if (JSON.parse(localStorage.getItem("clients")) === null) {
+//         localStorage.setItem("clients", JSON.stringify(data));
+//       }
+//     }
+//   }
+//   clientsData = data;
+// } else {
+//   clientsData = JSON.parse(localStorage.getItem("clients"));
+// }
 class ClientsView extends React.Component {
   constructor(props) {
     super(props);
