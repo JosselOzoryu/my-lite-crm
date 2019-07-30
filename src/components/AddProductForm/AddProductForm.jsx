@@ -118,16 +118,18 @@ export default class AddProductForm extends Component {
         />
 
         <span className="mla-add-product-form__dropzone-title">Imagen:</span>
-        <DropzoneArea
-          onChange={this.handleFileUpload}
-          acceptedFiles={["image/*"]}
-          filesLimit={1}
-          maxFileSize={10000000}
-          dropzoneClass="mla-add-product-form__dropzone"
-          showPreviews={true}
-          dropzoneText=""
-          showPreviewsInDropzone={false}
-        />
+        <div className="mla-add-product-form__dropzone-container">
+          <DropzoneArea
+            onChange={this.handleFileUpload}
+            acceptedFiles={["image/*"]}
+            filesLimit={1}
+            maxFileSize={10000000}
+            dropzoneClass="mla-add-product-form__dropzone"
+            showPreviews={true}
+            dropzoneText=""
+            showPreviewsInDropzone={false}
+          />
+        </div>
 
         <Button variant="contained" color="primary" onClick={this.onAddProduct}>
           Registrar

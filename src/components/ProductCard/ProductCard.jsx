@@ -6,12 +6,13 @@ import "./ProductCard.scss";
 
 function ProductCard(props) {
   const { product } = props;
-  const { image, id, productName, vendor, price, retailPrice } = product;
+  const { image, id, name, vendor, price } = product;
   return (
     <Card className="product-card">
       {/*  Foto del producto */}
       <div className="product-card__product-image">
-        <img src={image} alt="" />
+        <span className="product-card__product-image__holder" style={{ backgroundImage: `url(${image})` }} />
+        {/* <img src={image} alt="" /> */}
       </div>
       {/* Datos del producto  */}
       <div className="product-card__product-data">
@@ -24,7 +25,7 @@ function ProductCard(props) {
             Nombre:
           </span>
           <span className="product-card__product-data__name__value">
-            {productName}
+            {name}
           </span>
           <span className="product-card__product-data__data-label">
             Distribuidor:
@@ -40,12 +41,12 @@ function ProductCard(props) {
           <span className="product-card__product-data__prices__value">
             ${price}
           </span>
-          <span className="product-card__product-data__data-label">
+          {/* <span className="product-card__product-data__data-label">
             Precio al público:
           </span>
           <span className="product-card__product-data__prices__value">
             ${retailPrice}
-          </span>
+          </span> */}
         </div>
       </div>
     </Card>
