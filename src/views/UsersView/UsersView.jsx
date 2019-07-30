@@ -2,8 +2,12 @@
 import React from "react";
 import firestore from 'service/firestore';
 
+import Modal from '@material-ui/core/Modal';
+import AddUserForm from 'components/AddUserForm';
 import UserCard from "components/UserCard";
 import SideBar from "components/SideBar";
+import Fab from '@material-ui/core/Fab';
+import { Add as AddIcon } from '@material-ui/icons';
 
 import "./UsersView.scss";
 
@@ -11,7 +15,7 @@ class UsersView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: [] };
+    this.state = { data: [], modalIsOpen: false };
     this.originalData = [];
   }
   renderUsers = () => {
@@ -67,7 +71,15 @@ class UsersView extends React.Component {
     this.setState({ data: this.originalData });
   };
 
-  componentDidMount = () => {
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  }
+
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+  }
+
+  getUsers = () => {
     firestore.getUsers().then((users) => {
       this.setState({ data: users });
       this.originalData = users;
@@ -76,39 +88,64 @@ class UsersView extends React.Component {
     })
   }
 
+  componentDidMount = () => {
+    this.getUsers();
+  }
+
   render() {
+    const { modalIsOpen } = this.state;
     return (
-      <section id="users-view">
-        <div className="users-view__side-bar">
-          <SideBar
-            onSearch={this.filterUsers}
-            title={<h1 className="users-view__side-bar__title">Usuarios</h1>}
+      <React.Fragment>
+        <section id="users-view">
+          <div className="users-view__side-bar">
+            <SideBar
+              onSearch={this.filterUsers}
+              title={<h1 className="users-view__side-bar__title">Usuarios</h1>}
+            >
+              <div className="users-view__side-bar__filter-and-order">
+                <h2>Ordenar por:</h2>
+                <span
+                  className="users-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderUsers("name", "asc");
+                  }}
+                >
+                  Nombre - asc
+              </span>
+                <span
+                  className="users-view__side-bar__filter-and-order__filter"
+                  onClick={() => {
+                    this.orderUsers("name", "desc");
+                  }}
+                >
+                  Nombre - desc
+              </span>
+              </div>
+            </SideBar>
+          </div>
+          <div className="users-view__users-container">
+            <div className="users-view__users-grid">{this.renderUsers()}</div>
+          </div>
+          <Fab
+            className="users-view__add-product-fab"
+            color="primary"
+            aria-label="Add"
+            onClick={this.openModal}
           >
-            <div className="users-view__side-bar__filter-and-order">
-              <h2>Ordenar por:</h2>
-              <span
-                className="users-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderUsers("name", "asc");
-                }}
-              >
-                Nombre - asc
-              </span>
-              <span
-                className="users-view__side-bar__filter-and-order__filter"
-                onClick={() => {
-                  this.orderUsers("name", "desc");
-                }}
-              >
-                Nombre - desc
-              </span>
-            </div>
-          </SideBar>
-        </div>
-        <div className="users-view__users-container">
-          <div className="users-view__users-grid">{this.renderUsers()}</div>
-        </div>
-      </section>
+            <AddIcon />
+          </Fab>
+        </section>
+        <Modal
+          className="users-view__add-product-modal"
+          aria-labelledby="modal-agregar-producto"
+          aria-describedby="Formulario para agregar producto"
+          open={modalIsOpen}
+          disableAutoFocus={true}
+          onClose={() => { this.closeModal(); }}
+        >
+          <AddUserForm onClose={() => { this.closeModal(); this.getUsers(); }} />
+        </Modal>
+      </React.Fragment>
     );
   }
 }

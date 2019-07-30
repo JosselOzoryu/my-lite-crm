@@ -11,6 +11,7 @@ import "./UserCard.scss";
 class UserCard extends React.Component {
   render() {
     const { avatar, id, name, last_name, birthday, email, role } = this.props.user;
+    const bdate = typeof birthday === 'string' ? moment(birthday).format('DD/MM/YYYY') : moment(birthday.seconds).format('DD/MM/YYYY');
     return (
       <Card className="user-card">
         <div className="user-card__row justify-center align-middle">
@@ -45,9 +46,9 @@ class UserCard extends React.Component {
         <div className="user-card__row wrap-content space-between">
           <div className="user-card__detail-container">
             <span className="user-card__detail-container--label">
-              Fecha de nacimiento:{" "}
+              Fecha de nacimiento:{"  "}
             </span>
-            <span>{moment(birthday.toDate()).format('DD/MM/YYYY')}</span>
+            <span>{bdate}</span>
           </div>
 
           <div className="user-card__detail-container">
