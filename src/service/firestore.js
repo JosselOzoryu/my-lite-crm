@@ -12,7 +12,7 @@ class firebaseService {
 
   addUser = ({ avatar, birthday, email, last_name, name, role }) => {
     return new Promise((resolve, reject) => {
-      const user = { avatar, birthday: moment(birthday).format('X'), email, last_name, name, role };
+      const user = { avatar, birthday: moment(birthday).unix(), email, last_name, name, role };
       this.db.collection("users").add(user).then((response) => {
         resolve(response);
       }).catch((error) => {
