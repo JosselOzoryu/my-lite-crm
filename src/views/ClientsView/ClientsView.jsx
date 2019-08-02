@@ -2,11 +2,9 @@
 import React from "react";
 
 // Material components
-import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import clsx from "clsx";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Grid from "@material-ui/core/Grid";
 import Icon from "@material-ui/core/Icon";
 import Table from "@material-ui/core/Table";
@@ -18,9 +16,6 @@ import Paper from "@material-ui/core/Paper";
 import Modal from "@material-ui/core/Modal";
 import Fab from "@material-ui/core/Fab";
 import { Add as AddIcon } from "@material-ui/icons";
-
-import firestore from "service/firestore";
-import moment from "moment";
 
 // Local Components
 import AddClientForm from "components/AddClientForm";
@@ -151,15 +146,15 @@ class ClientsView extends React.Component {
           <div className="users-view__side-bar">
             <SideBar
               onSearch={this.filterClients}
-              //* Button to add clients on the sidebar
-              //* It got replaced by a Fab button (Material-UI)
-              // title={
-              //   <h1 className="users-view__side-bar__title">
-              //     <Link className="mla-app-bar__menu-item" to="/clients/add">
-              //       <Button color="primary">Agregar cliente</Button>
-              //     </Link>
-              //   </h1>
-              // }
+            //* Button to add clients on the sidebar
+            //* It got replaced by a Fab button (Material-UI)
+            // title={
+            //   <h1 className="users-view__side-bar__title">
+            //     <Link className="mla-app-bar__menu-item" to="/clients/add">
+            //       <Button color="primary">Agregar cliente</Button>
+            //     </Link>
+            //   </h1>
+            // }
             >
               <div className="users-view__side-bar__filter-and-order">
                 <h2>Ordenar por:</h2>
@@ -246,7 +241,7 @@ class ClientsView extends React.Component {
             </Paper>
           </div>
           <Fab
-            className="products-view__add-product-fab"
+            className="clients-view__add-client-fab"
             color="primary"
             aria-label="Add"
             onClick={this.openModal}
