@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import fitty from 'fitty';
 
-import { FreeBreakfast } from '@material-ui/icons';
+import productLogo from 'assets/logo.svg'
 
 import "./Logo.scss";
 
 const Logo = (props) => {
   const { width, height } = props;
   return (
-    <div className="mlc-animated-logo" height={height} width={width}>
-      <FreeBreakfast y="1em" className="mlc-animated-logo__icon" />
-      <span className="mlc-animated-logo__name">{fitty("My Little Manager")}</span>
+    <div className="mlc-logo" height={height} width={width}>
+      <span className="mlc-logo__image" style={{ backgroundImage: `url(${productLogo})` }} />
+      <span className="mlc-logo__name">My Little Manager</span>
     </div>
   );
 }

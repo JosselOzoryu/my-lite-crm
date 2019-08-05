@@ -6,6 +6,24 @@
   padding: 1em 8px;
 }
 
+.mla-app-bar__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  margin: 8px 0;
+  padding: 0 0 8px 0;
+  cursor: pointer;
+
+   & > span {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 35px;
+    width: 35px;
+   }
+}
+
 .mla-app-bar__menu-item {
   display: flex;
   justify-content: flex-start;
@@ -16,7 +34,7 @@
   cursor: pointer;
   text-decoration: none;
   color: #000;
-  font-family: "Montserrat";
+  font-family: "Roboto";
 
   & .MuiSvgIcon-root {
     background-color: #3F51B5;

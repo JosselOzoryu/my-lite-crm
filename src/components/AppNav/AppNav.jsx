@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FirebaseAuthConsumer } from "@react-firebase/auth";
 
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/ToolBar";
 import Drawer from "@material-ui/core/Drawer";
-import TouchRipple from "@material-ui/core/ButtonBase/TouchRipple";
 import {
   Menu as MenuIcon,
   Person as PersonIcon,
@@ -15,6 +15,7 @@ import {
 } from "@material-ui/icons/";
 import IconButton from "@material-ui/core/IconButton";
 
+import productLogo from 'assets/logo.svg'
 import "./AppNav.scss";
 
 export default class AppNav extends Component {
@@ -48,40 +49,56 @@ export default class AppNav extends Component {
             <MenuIcon />
           </IconButton>
 
-          <Link className="mla-app-bar__home-menu" to="/">
-            <TouchRipple>
-              <div className="app-navbar__logo">My Lite CRM</div>
-            </TouchRipple>
-          </Link>
-
           <Drawer
             className="mla-app-bar__drawer"
             open={drawerIsOpen}
             onClose={this.closeDrawer}
           >
-            <Link className="mla-app-bar__menu-item" to="/users">
-              <PersonIcon />
-              Usuarios
+            <Link className="mla-app-bar__logo" to="/">
+              <span style={{ backgroundImage: `url(${productLogo})` }} />
             </Link>
-            <Link className="mla-app-bar__menu-item" to="/clients">
-              <Clients />
-              Clientes
-            </Link>
-            <Link className="mla-app-bar__menu-item" to="/products">
-              <LocalOfferIcon />
-              Productos
-            </Link>
-            <Link className="mla-app-bar__menu-item" to="/products/add">
-              <NoteAddIcon />
-              Agregar Productos
-            </Link>
-            <Link className="mla-app-bar__menu-item" to="/services">
-              <BuildIcon />
-              Services
-            </Link>
-            <Link className="mla-app-bar__menu-item" to="/sign-in">
-              Log In
-            </Link>
+
+            <FirebaseAuthConsumer>
+              {({ isSignedIn, user, providerId }) => {
+                if (isSignedIn) {
+                  return (
+                    <React.Fragment>
+                      <Link className="mla-app-bar__menu-item" to="/users">
+                        <PersonIcon />
+                        Usuarios
+                      </Link>
+                      <Link className="mla-app-bar__menu-item" to="/clients">
+                        <Clients />
+                        Clientes
+                      </Link>
+                      <Link className="mla-app-bar__menu-item" to="/products">
+                        <LocalOfferIcon />
+                        Productos
+                      </Link>
+                      <Link className="mla-app-bar__menu-item" to="/products/add">
+                        <NoteAddIcon />
+                        Agregar Productos
+                      </Link>
+                      <Link className="mla-app-bar__menu-item" to="/services">
+                        <BuildIcon />
+                        Services
+                      </Link>
+                      <Link className="mla-app-bar__menu-item" to="/sign-in">
+                        Log Out
+                      </Link>
+                    </React.Fragment>
+                  );
+                } else {
+                  return (
+                    <React.Fragment>
+                      <Link className="mla-app-bar__menu-item" to="/sign-in">
+                        Log In
+                      </Link>
+                    </React.Fragment>
+                  );
+                }
+              }}
+            </FirebaseAuthConsumer>
           </Drawer>
         </ToolBar>
       </AppBar>
