@@ -92,7 +92,7 @@ getServices = () => {
 
 componentDidMount = () => {
   this.getServices();
-}
+};
 
 render() {
   const { modalIsOpen } = this.state;

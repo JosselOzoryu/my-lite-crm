@@ -192,15 +192,15 @@ class firebaseService {
   getClients = () => {
     return new Promise((resolve, reject) => {
       try {
-        const products = [];
+        const clients = [];
         this.db
           .collection("clients")
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(function(doc) {
-              products.push({ id: doc.id, ...doc.data() });
+              clients.push({ id: doc.id, ...doc.data() });
             });
-            resolve(products);
+            resolve(clients);
           })
           .catch(queryError => {
             console.log("Error getting documents: ", queryError);
