@@ -102,7 +102,7 @@ render() {
         <div className="services-view__side-bar">
           <SideBar
             onSearch={this.filterUsers}
-            title={<h1 className="services-view__side-bar__title">Usuarios</h1>}
+            title={<h1 className="services-view__side-bar__title">Servicios</h1>}
           >
             <div className="services-view__side-bar__filter-and-order">
               <h2>Ordenar por:</h2>

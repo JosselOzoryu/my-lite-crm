@@ -40,7 +40,7 @@ class firebaseService {
           .collection("users")
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(function (doc) {
+            querySnapshot.forEach(function(doc) {
               users.push({ id: doc.id, ...doc.data() });
             });
             resolve(users);
@@ -100,7 +100,6 @@ class firebaseService {
   };
 
   // Productos
-
   getProducts = () => {
     return new Promise((resolve, reject) => {
       try {
@@ -109,7 +108,7 @@ class firebaseService {
           .collection("products")
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(function (doc) {
+            querySnapshot.forEach(function(doc) {
               products.push({ id: doc.id, ...doc.data() });
             });
             resolve(products);
@@ -142,6 +141,74 @@ class firebaseService {
         .catch(error => {
           reject(error);
         });
+    });
+  };
+
+  // Services
+  getService = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const products = [];
+        this.db
+          .collection("services")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(function(doc) {
+              products.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(products);
+          })
+          .catch(queryError => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  addService = ({ id, serviceName, price, serviceInfo }) => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection("services")
+        .doc(generateUID())
+        .set({
+          id,
+          serviceName,
+          price,
+          serviceInfo
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  //Clients
+  getClients = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const products = [];
+        this.db
+          .collection("clients")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(function(doc) {
+              products.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(products);
+          })
+          .catch(queryError => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
+        reject(error);
+      }
     });
   };
 
