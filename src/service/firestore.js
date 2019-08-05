@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import * as firebaseApp from "firebase/app";
 import fireConfig from "../fire";
-import moment from 'moment';
+import moment from "moment";
 
 class firebaseService {
   constructor() {
@@ -12,14 +12,25 @@ class firebaseService {
 
   addUser = ({ avatar, birthday, email, last_name, name, role }) => {
     return new Promise((resolve, reject) => {
-      const user = { avatar, birthday: moment(birthday).unix(), email, last_name, name, role };
-      this.db.collection("users").add(user).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+      const user = {
+        avatar,
+        birthday: moment(birthday).unix(),
+        email,
+        last_name,
+        name,
+        role
+      };
+      this.db
+        .collection("users")
+        .add(user)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
-  }
+  };
 
   getUsers = () => {
     return new Promise((resolve, reject) => {
@@ -166,8 +177,8 @@ class firebaseService {
     });
   };
 
-  // Images 
-  uploadImage = (image) => {
+  // Images
+  uploadImage = image => {
     return new Promise((resolve, reject) => {
       let storageRef = this.storage.ref(image.name);
       storageRef
