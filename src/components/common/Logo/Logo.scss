@@ -1,9 +1,22 @@
-.mlc-animated-logo {
-  display:flex;
+.mlc-logo {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Expletus Sans";
 
+  & > .mlc-logo__image {
+    display: flex;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 120px;
+    width: 120px;
+  }
 
-
+  & > .mlc-logo__name {
+    text-shadow: 2px 2px 1px rgba(#959CDA, 0.5);
+    font-weight: 400;
+    font-size: 2em;
+    color: #646ECC;
+  }
 }

@@ -29,7 +29,7 @@ class firebaseService {
           .collection("users")
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(function(doc) {
+            querySnapshot.forEach(function (doc) {
               users.push({ id: doc.id, ...doc.data() });
             });
             resolve(users);
@@ -62,25 +62,15 @@ class firebaseService {
 
   userSignIn = (email, password) => {
     return new Promise((resolve, reject) => {
-      const userList = this.getUserFromDb(email)
-        .then(userList => userList)
-        .catch(userError => {
-          reject(userError);
+      firebaseApp
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
         });
-
-      if (userList.length !== 0) {
-        firebaseApp
-          .auth()
-          .signInWithEmailAndPassword(email, password)
-          .then(response => {
-            resolve(response);
-          })
-          .catch(error => {
-            reject(error);
-          });
-      } else {
-        reject({ code: 404, error: "User not in DB" });
-      }
     });
   };
 
@@ -108,7 +98,7 @@ class firebaseService {
           .collection("products")
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(function(doc) {
+            querySnapshot.forEach(function (doc) {
               products.push({ id: doc.id, ...doc.data() });
             });
             resolve(products);
