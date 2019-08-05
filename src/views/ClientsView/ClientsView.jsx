@@ -121,14 +121,21 @@ class ClientsView extends React.Component {
     this.setState({ data: this.originalData });
   };
 
-  // componentDidMount = () => {
-  //   firestore.getUsers().then((users) => {
-  //     this.setState({ data: users });
-  //     this.originalData = users;
-  //   }).catch((error) => {
-  //     console.error(error);
-  //   })
-  // }
+  getClients = () => {
+    firestore
+      .getClients()
+      .then(clients => {
+        this.setState({ data: clients });
+        this.originalData = clients;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  componentDidMount = () => {
+    this.getClients();
+  };
 
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -146,15 +153,15 @@ class ClientsView extends React.Component {
           <div className="users-view__side-bar">
             <SideBar
               onSearch={this.filterClients}
-            //* Button to add clients on the sidebar
-            //* It got replaced by a Fab button (Material-UI)
-            // title={
-            //   <h1 className="users-view__side-bar__title">
-            //     <Link className="mla-app-bar__menu-item" to="/clients/add">
-            //       <Button color="primary">Agregar cliente</Button>
-            //     </Link>
-            //   </h1>
-            // }
+              //* Button to add clients on the sidebar
+              //* It got replaced by a Fab button (Material-UI)
+              // title={
+              //   <h1 className="users-view__side-bar__title">
+              //     <Link className="mla-app-bar__menu-item" to="/clients/add">
+              //       <Button color="primary">Agregar cliente</Button>
+              //     </Link>
+              //   </h1>
+              // }
             >
               <div className="users-view__side-bar__filter-and-order">
                 <h2>Ordenar por:</h2>
