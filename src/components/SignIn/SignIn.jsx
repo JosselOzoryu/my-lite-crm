@@ -3,7 +3,6 @@ import { FirebaseAuthConsumer } from "@react-firebase/auth";
 import firebaseService from "service/firestore";
 
 import Logo from 'components/common/Logo';
-// import Button from 'components/common/Button';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -25,7 +24,7 @@ class SignIn extends React.Component {
     firebaseService.userSignIn(email, password).then((response) => {
 
     }).catch((error) => {
-      alert(error);
+      console.error(error);
     });
   }
 
