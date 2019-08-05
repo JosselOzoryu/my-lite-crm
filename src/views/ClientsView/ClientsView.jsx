@@ -186,7 +186,7 @@ class ClientsView extends React.Component {
             </SideBar>
           </div>
           <div className="clients-view__users-container">
-            {/*<div className="users-view__users-grid">{this.renderUsers()}</div>*/}
+            {/* {<div className="users-view__users-grid">{this.renderUsers()}</div>} */}
             <Paper>
               <Table>
                 <TableHead>
