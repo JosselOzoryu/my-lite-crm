@@ -7,10 +7,10 @@ import ServiceCard from "components/SeviceCard";
 import SideBar from "components/SideBar";
 
 import Card from "@material-ui/core/Card";
-import Modal from '@material-ui/core/Modal';
-import AddUserForm from 'components/AddUserForm';
-import Fab from '@material-ui/core/Fab';
-import { Add as AddIcon } from '@material-ui/icons';
+import Modal from "@material-ui/core/Modal";
+import AddServiceForm from "components/AddServiceForm";
+import Fab from "@material-ui/core/Fab";
+import { Add as AddIcon } from "@material-ui/icons";
 
 //Style imports
 import "./ServicesView.scss";
@@ -93,9 +93,9 @@ class ServicesView extends React.Component {
       });
   };
 
-componentDidMount = () => {
-  this.getServices();
-}
+  componentDidMount = () => {
+    this.getServices();
+  };
 
   render() {
     const { modalIsOpen } = this.state;
