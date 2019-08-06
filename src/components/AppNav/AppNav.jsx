@@ -7,15 +7,15 @@ import ToolBar from "@material-ui/core/ToolBar";
 import Drawer from "@material-ui/core/Drawer";
 import {
   Menu as MenuIcon,
-  Person as PersonIcon,
+  AssignmentInd as UsersIcon,
   BusinessCenter as Clients,
   LocalOffer as LocalOfferIcon,
-  NoteAdd as NoteAddIcon,
+  ExitToApp as LogOutIcon,
   Build as BuildIcon
 } from "@material-ui/icons/";
 import IconButton from "@material-ui/core/IconButton";
 
-import productLogo from 'assets/logo.svg'
+import productLogo from "assets/logo.svg";
 import "./AppNav.scss";
 
 export default class AppNav extends Component {
@@ -64,7 +64,7 @@ export default class AppNav extends Component {
                   return (
                     <React.Fragment>
                       <Link className="mla-app-bar__menu-item" to="/users">
-                        <PersonIcon />
+                        <UsersIcon />
                         Usuarios
                       </Link>
                       <Link className="mla-app-bar__menu-item" to="/clients">
@@ -75,15 +75,12 @@ export default class AppNav extends Component {
                         <LocalOfferIcon />
                         Productos
                       </Link>
-                      <Link className="mla-app-bar__menu-item" to="/products/add">
-                        <NoteAddIcon />
-                        Agregar Productos
-                      </Link>
                       <Link className="mla-app-bar__menu-item" to="/services">
                         <BuildIcon />
                         Services
                       </Link>
                       <Link className="mla-app-bar__menu-item" to="/sign-in">
+                        <LogOutIcon />
                         Log Out
                       </Link>
                     </React.Fragment>
