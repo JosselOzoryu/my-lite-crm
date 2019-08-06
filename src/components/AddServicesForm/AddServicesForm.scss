@@ -1,0 +1,44 @@
+.mla-add-product-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 618px;
+    padding: 8px;
+    padding: 0.5em;
+    outline: none;
+
+    &>.mla-add-product-form__form-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &>.mla-add-product-form__dropzone-title {
+        font-family: "Roboto";
+        margin: 0 0 8px 0;
+    }
+
+    &>.mla-add-product-form__dropzone-container {
+        display: flex;
+
+        &>.mla-add-product-form__dropzone {
+            width: 50%;
+            min-height: 70px;
+            margin: 0 0 16px 0;
+        }
+
+        & .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-8 {
+            width: 50%;
+        }
+
+        &>div:nth-of-type(2) {
+            display: none;
+        }
+
+        & .PreviewList-imageContainer-294 {
+            max-width: 100%;
+            flex-basis: 100%;
+            padding: 0px;
+            margin: 6px 0;
+        }
+    }
+}
