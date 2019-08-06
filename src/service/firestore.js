@@ -168,16 +168,15 @@ class firebaseService {
     });
   };
 
-  addService = ({ id, serviceName, price, serviceInfo }) => {
+  addService = ({ name, price, description }) => {
     return new Promise((resolve, reject) => {
       this.db
         .collection("services")
         .doc(generateUID())
         .set({
-          id,
-          serviceName,
+          name,
           price,
-          serviceInfo
+          description
         })
         .then(response => {
           resolve(response);

@@ -14,23 +14,22 @@ import Typography from "@material-ui/core/Typography";
 
 function ServiceCard(props) {
   const { service } = props;
-  const { id, serviceName, price, serviceInfo } = service;
+  const { id, name, price, description } = service;
   return (
     <Card className="service-card">
-      {/* Service information  */}
       <div className="service-card__service-data">
         <div className="service-card__service-data__id">
           <span className="service-card__service-data__data-label">ID:</span>
           <span className="service-card__service-data__id__value">{id}</span>
         </div>
-        <div className="service-card__service-data__name">
+        <span className="service-card__service-data__name">
           <span className="service-card__service-data__data-label">
             Nombre:
           </span>
           <span className="service-card__service-data__name__value">
-            {serviceName}
-          </span>
-        </div>
+            {name}
+       description        
+       </span>
         <div className="service-card__service-data__price">
           <span className="service-card__service-data__data-label">
             Precio por el servicio:
@@ -42,22 +41,22 @@ function ServiceCard(props) {
             ${serviceInfo}
           </span>
         </div>
-      </div>
+        </span>
+        </div>
     </Card>
   );
 }
 
 function MediaCard(props) {
   const { service } = props;
-  const { id, serviceName, price, serviceInfo } = service;
+  const { name, price, description } = service;
   return (
     <Card className="service-card">
       <CardActionArea>
         <CardMedia
           src="https://www.aashe.org/wp-ontent/uploads/2018/02/Placeholder-Banner.png"
-          title={serviceName}
-        />
-        <CardContent>
+          title={name}
+       description <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             Lizard
           </Typography>
@@ -82,8 +81,7 @@ function MediaCard(props) {
 ServiceCard.defaultProps = {
   service: {
     id: "asdasdasdasdasdasdsasdasdasd",
-    serviceName: "pito",
-    price: 6969,
+    name: "pito",description 6969,
     serviceInfo: "me la comes"
   }
 };

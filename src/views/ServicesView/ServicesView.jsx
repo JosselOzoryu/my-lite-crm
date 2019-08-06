@@ -47,7 +47,7 @@ class ServicesView extends React.Component {
     }
   };
 
-  orderService = (property, order) => {
+  orderServices = (property, order) => {
     const services = [...this.state.data];
     services.sort((a, b) => {
       if (a[property] < b[property]) {
@@ -114,7 +114,7 @@ class ServicesView extends React.Component {
                 <span
                   className="services-view__side-bar__filter-and-order__filter"
                   onClick={() => {
-                    this.orderservices("name", "asc");
+                    this.orderServices("name", "asc");
                   }}
                 >
                   Nombre - asc
@@ -122,7 +122,7 @@ class ServicesView extends React.Component {
                 <span
                   className="services-view__side-bar__filter-and-order__filter"
                   onClick={() => {
-                    this.orderservices("name", "desc");
+                    this.orderServices("name", "desc");
                   }}
                 >
                   Nombre - desc

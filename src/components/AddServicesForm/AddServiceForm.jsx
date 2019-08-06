@@ -10,14 +10,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MomentUtils from "@date-io/moment";
 
 import "moment/locale/es";
-// import "./AddServiceForm.scss";
+//import "./AddServiceForm.scss";
 
 class AddServiceForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      serviceid: "",
       name: "",
       price: "",
       description: "",
@@ -57,7 +56,7 @@ class AddServiceForm extends Component {
   onAddService = () => {
     const { name, price, description } = this.state;
     firestore
-      .addService({})
+      .addService({ name, price, description })
       .then(response => {
         this.props.onClose();
         this.openSnackBar("success", "Servicio agregado con éxito");
