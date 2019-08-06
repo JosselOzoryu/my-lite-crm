@@ -145,7 +145,7 @@ class firebaseService {
   };
 
   // Services
-  getService = () => {
+  getServices = () => {
     return new Promise((resolve, reject) => {
       try {
         const products = [];

@@ -3,12 +3,12 @@ import React from "react";
 import firestore from "service/firestore";
 
 //Components imports
-import ServiceCard from "components/SeviceCard";
+import ServiceCard from "components/ServiceCard";
 import SideBar from "components/SideBar";
 
 import Card from "@material-ui/core/Card";
 import Modal from "@material-ui/core/Modal";
-import AddServiceForm from "components/AddServiceForm";
+import AddServiceForm from "components/AddServicesForm";
 import Fab from "@material-ui/core/Fab";
 import { Add as AddIcon } from "@material-ui/icons";
 

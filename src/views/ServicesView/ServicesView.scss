@@ -1,0 +1,74 @@
+#services-view {
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.services-view__side-bar {
+    width: 25%;
+    min-width: 200px;
+    max-width: 200px;
+
+    & .services-view__side-bar__title {
+        font-size: 22px;
+        font-weight: 400;
+        color: #002448;
+    }
+
+    & .services-view__side-bar__filter-and-order {
+        display: flex;
+        flex-direction: column;
+        margin: 6px 0 0 0;
+
+        & h2 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        & .services-view__side-bar__filter-and-order__filter {
+            font-size: 16px;
+            font-weight: 300;
+            text-decoration: underline;
+            cursor: pointer;
+            color: #002448;
+            margin: 5px 0;
+        }
+    }
+}
+
+.services-view__services-container {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 1em;
+
+    table>tbody>tr.MuiTableRow-root:hover {
+        background-color: #f2f2f2;
+        transition: all 0.3s;
+    }
+}
+
+.services-view__services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-auto-rows: minmax(min-content, max-content);
+    grid-gap: 14px;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    box-sizing: border-box;
+
+    & .services-view__services-grid__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.clients-view__add-client-fab {
+    position: absolute !important;
+    bottom: 1em;
+    right: 1em;
+}

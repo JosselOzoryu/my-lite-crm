@@ -12,8 +12,8 @@ import ClientView from "views/ClientsView";
 import AddClientView from "views/AddClientView";
 import ProductsView from "views/ProductsView";
 import AddProductView from "views/AddProductView";
-//import ServicesView from "views/ServicesView";
-import ServiceCard from "components/ServiceCard";
+import ServicesView from "views/ServicesView";
+//import ServiceCard from "components/ServiceCard";
 
 //Components import
 import SignIn from "./components/SignIn";
@@ -38,7 +38,7 @@ function App() {
             <Route exact path="/products" component={ProductsView} />
             <Route exact path="/products/add" component={AddProductView} />
             <Route exact path="/sign-in" component={SignIn} />
-            <Route exact path="/services" component={ServiceCard} />
+            <Route exact path="/services" component={ServicesView} />
           </div>
         </div>
       </FirebaseAuthProvider>
