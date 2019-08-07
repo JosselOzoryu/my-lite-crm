@@ -81,8 +81,8 @@ function MediaCard(props) {
 ServiceCard.defaultProps = {
   service: {
     id: "asdasdasdasdasdasdsasdasdasd",
-    name: "pito",description 6969,
-    serviceInfo: "me la comes"
+    name: "holi",description 6969,
+    serviceInfo: "aaaaay lmao"
   }
 };
 
