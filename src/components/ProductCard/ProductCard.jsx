@@ -51,8 +51,6 @@ class ProductCard extends React.Component {
   }
 
   handleInputs = (event) => {
-    console.log(event.name);
-    console.log(event.target);
     event.persist();
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -105,7 +103,8 @@ class ProductCard extends React.Component {
   }
 
   updateProduct = () => {
-    const { description, image, id, name, vendor, price } = this.props.product;
+    const { description, name, vendor, price } = this.state;
+    const { id, image } = this.props.product;
     firestore.updateProduct({ description, image, name, price, vendor, id }).then(() => {
       alert("Editado con exito");
       this.closeDialog();
@@ -116,7 +115,8 @@ class ProductCard extends React.Component {
 
   render() {
     const { product } = this.props;
-    const { image, id, name, vendor, price } = this.state;
+    const { id, name, vendor, price } = this.state;
+    const { image } = product;
     return (
       <Card className="product-card">
         {/*  Foto del producto */}
