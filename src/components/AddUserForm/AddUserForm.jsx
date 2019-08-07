@@ -1,42 +1,42 @@
-import React, { Component } from 'react'
-import firestore from 'service/firestore';
-import moment from 'moment';
+//Core imports
+import React, { Component } from "react";
+import firestore from "service/firestore";
+import moment from "moment";
 
-import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { DropzoneArea } from 'material-ui-dropzone'
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import {
-  MuiPickersUtilsProvider,
-  DatePicker,
-} from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+//Material UI imports
+import Card from "@material-ui/core/Card";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import { DropzoneArea } from "material-ui-dropzone";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
+//Style imports
 import "moment/locale/es";
-import './AddUserForm.scss';
+import "./AddUserForm.scss";
 
 export default class AddUserForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       avatar: null,
       birthday: moment(),
-      name: '',
-      lastName: '',
-      email: '',
-      role: '',
+      name: "",
+      lastName: "",
+      email: "",
+      role: "",
       image: null,
       snackBar: {
         open: false,
-        variant: '',
-        message: ''
+        variant: "",
+        message: ""
       }
-    }
+    };
   }
 
   openSnackBar = (variant, message) => {
@@ -44,50 +44,61 @@ export default class AddUserForm extends Component {
       snackBar: {
         open: true,
         variant,
-        message,
+        message
       }
     });
-  }
+  };
 
   closeSnackBar = () => {
     this.setState({
       snackBar: {
         open: false,
-        variant: '',
-        message: '',
+        variant: "",
+        message: ""
       }
     });
-  }
+  };
 
-  handleInputs = (event) => {
+  handleInputs = event => {
     event.persist();
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
-  handleDateInput = (date) => {
-    this.setState({ birthday: date })
-  }
+  handleDateInput = date => {
+    this.setState({ birthday: date });
+  };
 
-  handleFileUpload = (file) => {
+  handleFileUpload = file => {
     this.setState({ image: file[0] });
-  }
+  };
 
   onAddProduct = () => {
     const { birthday, image, name, email, lastName, role } = this.state;
-    firestore.uploadImage(image).then((avatar) => {
+    firestore.uploadImage(image).then(avatar => {
       const user = { avatar, birthday, email, last_name: lastName, name, role };
-      firestore.addUser(user).then((response) => {
-        this.props.onClose();
-        this.openSnackBar('success', 'Producto agregado con éxito');
-      }).catch(error => {
-        console.error(error);
-        this.openSnackBar('error', error.toString());
-      });
+      firestore
+        .addUser(user)
+        .then(response => {
+          this.props.onClose();
+          this.openSnackBar("success", "Producto agregado con éxito");
+        })
+        .catch(error => {
+          console.error(error);
+          this.openSnackBar("error", error.toString());
+        });
     });
-  }
+  };
 
   render() {
-    const { name, lastName, email, role, snackbarIsOpen, birthday, snackBar } = this.state;
+    const {
+      name,
+      lastName,
+      email,
+      role,
+      snackbarIsOpen,
+      birthday,
+      snackBar
+    } = this.state;
     return (
       <Card className="mla-add-user-form">
         <TextField
@@ -119,7 +130,7 @@ export default class AddUserForm extends Component {
             showPreviewsInDropzone={false}
           />
         </div>
-        <MuiPickersUtilsProvider utils={MomentUtils} locale={'es'}>
+        <MuiPickersUtilsProvider utils={MomentUtils} locale={"es"}>
           <DatePicker
             margin="normal"
             id="mui-pickers-date"
@@ -143,8 +154,8 @@ export default class AddUserForm extends Component {
           onChange={this.handleInputs}
           name="role"
         >
-          <MenuItem value={'user'}>Usuario</MenuItem>
-          <MenuItem value={'admin'}>Admin</MenuItem>
+          <MenuItem value={"user"}>Usuario</MenuItem>
+          <MenuItem value={"admin"}>Admin</MenuItem>
         </Select>
         <Button variant="contained" color="primary" onClick={this.onAddProduct}>
           Registrar
@@ -152,12 +163,11 @@ export default class AddUserForm extends Component {
         <Snackbar
           open={snackbarIsOpen}
           autoHideDuration={6000}
-          onClose={this.closeSnackBar}>
-          <SnackbarContent>
-            {snackBar.message}
-          </SnackbarContent>
+          onClose={this.closeSnackBar}
+        >
+          <SnackbarContent>{snackBar.message}</SnackbarContent>
         </Snackbar>
-      </Card >
-    )
+      </Card>
+    );
   }
 }
