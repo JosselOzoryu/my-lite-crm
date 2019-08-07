@@ -84,6 +84,25 @@ class firebaseService {
     });
   }
 
+  deleteAuthUser = (email) => {
+    return new Promise((resolve, reject) => {
+      this.auth.getUserByEmail(email).then(response => {
+        const user = JSON.parse(response);
+        this.auth.updateUser(user.email, {
+          disabled: true
+        }).then(response => {
+          resolve();
+        }).catch(e => {
+          reject(e);
+          alert(e);
+        })
+      }).catch(error => {
+        reject(error);
+        alert(error)
+      });
+    });
+  }
+
   getUsers = () => {
     return new Promise((resolve, reject) => {
       try {
