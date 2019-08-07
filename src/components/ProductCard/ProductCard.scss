@@ -64,3 +64,13 @@
     color: #666262;
   }
 }
+
+.product-card__fab-edit {
+  height: 25px !important;
+  width: 34px !important;
+
+  & svg {
+    height: .7em !important;
+    width: .7em !important;
+  }
+}
