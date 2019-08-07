@@ -28,21 +28,21 @@ function ServiceCard(props) {
           </span>
           <span className="service-card__service-data__name__value">
             {name}
-       description        
-       </span>
-        <div className="service-card__service-data__price">
-          <span className="service-card__service-data__data-label">
-            Precio por el servicio:
+            description
           </span>
-          <span className="service-card__service-data__price__value">
-            ${price}
-          </span>
-          <span className="service-card__service-data__price__value">
-            ${serviceInfo}
-          </span>
-        </div>
+          <div className="service-card__service-data__price">
+            <span className="service-card__service-data__data-label">
+              Precio por el servicio:
+            </span>
+            <span className="service-card__service-data__price__value">
+              ${price}
+            </span>
+            <span className="service-card__service-data__price__value">
+              ${description}
+            </span>
+          </div>
         </span>
-        </div>
+      </div>
     </Card>
   );
 }
@@ -80,9 +80,9 @@ function MediaCard(props) {
 
 ServiceCard.defaultProps = {
   service: {
-    id: "asdasdasdasdasdasdsasdasdasd",
-    name: "holi",description 6969,
-    serviceInfo: "aaaaay lmao"
+    name: "holi",
+    price: 6969,
+    description: "aaaaay lmao"
   }
 };
 
