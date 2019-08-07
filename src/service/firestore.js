@@ -8,16 +8,79 @@ class firebaseService {
     firebaseApp.initializeApp(fireConfig);
     this.db = firebase.firestore();
     this.storage = firebaseApp.storage();
+    this.auth = firebaseApp.auth();
+  }
+
+  isUserLoggedIn = () => {
+    const user = this.auth.currentUser;
+    return ({
+      isLoggedIn: user ? true : false,
+      user
+    });
   }
 
   addUser = ({ avatar, birthday, email, last_name, name, role }) => {
     return new Promise((resolve, reject) => {
-      const user = { avatar, birthday: moment(birthday).unix(), email, last_name, name, role };
+      const user = { avatar, birthday: moment(birthday).unix(), email, last_name, name, role, active: true, };
       this.db.collection("users").add(user).then((response) => {
         resolve(response);
       }).catch((error) => {
         reject(error);
       });
+    });
+  }
+
+  addAuthUser = (email, password) => {
+    return new Promise((resolve, reject) => {
+      this.auth.createUserWithEmailAndPassword(email, password).then(() => {
+        resolve();
+      }).catch((error) => {
+        switch (error) {
+          case 'auth/email-already-in-use':
+            reject({ error, message: "Email no disponible" });
+            break;
+          case 'auth/invalid-email':
+            reject({ error, message: "Email no válido" });
+            break;
+          case 'auth/weak-password':
+            reject({ error, message: "Contraseña débil, usa una distinta" });
+            break;
+          default:
+            reject(error);
+            break;
+        }
+      });
+    })
+  }
+
+  updateUser = ({ avatar, birthday, email, last_name, name, role, id }) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("users").doc(id).update({
+        avatar,
+        birthday,
+        email,
+        last_name,
+        name,
+        role,
+      }).then(response => {
+        resolve(response);
+      }).catch((error) => {
+        console.error(error);
+        reject(error);
+      })
+    });
+  }
+
+  deleteUser = (id) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("users").doc(id).update({
+        active: false,
+      }).then(response => {
+        resolve(response);
+      }).catch((error) => {
+        console.error(error);
+        reject(error);
+      })
     });
   }
 
@@ -123,7 +186,8 @@ class firebaseService {
           image,
           name,
           price,
-          vendor
+          vendor,
+          active: true,
         })
         .then(response => {
           resolve(response);
@@ -133,6 +197,38 @@ class firebaseService {
         });
     });
   };
+
+  updateProduct = ({ description, image, name, price, vendor, id }) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("products").doc(id).update({
+        description,
+        image,
+        name,
+        price,
+        vendor,
+      }).then(response => {
+        resolve(response);
+      }).catch((error) => {
+        console.error(error);
+        reject(error);
+      })
+    });
+  }
+
+  deleteProduct = (id) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("products").doc(id).update({
+        active: false,
+      }).then(response => {
+        resolve(response);
+      }).catch((error) => {
+        console.error(error);
+        reject(error);
+      })
+    });
+  }
+
+  // Clients
 
   addClient = ({ name, last_name, address, email, phone, creationDate }) => {
     return new Promise((resolve, reject) => {
@@ -145,7 +241,8 @@ class firebaseService {
           address,
           email,
           phone,
-          creationDate
+          creationDate,
+          active: true,
         })
         .then(response => {
           resolve(response);
@@ -155,6 +252,37 @@ class firebaseService {
         });
     });
   };
+
+  updateClient = ({ name, last_name, address, email, phone, creationDate, id }) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("products").doc(id).update({
+        name,
+        last_name,
+        address,
+        email,
+        phone,
+        creationDate,
+      }).then(response => {
+        resolve(response);
+      }).catch((error) => {
+        console.error(error);
+        reject(error);
+      })
+    });
+  }
+
+  deleteClient = (id) => {
+    return new Promise((resolve, reject) => {
+      this.db.collection("products").doc(id).update({
+        active: false,
+      }).then(response => {
+        resolve(response);
+      }).catch((error) => {
+        console.error(error);
+        reject(error);
+      })
+    });
+  }
 
   // Images 
   uploadImage = (image) => {

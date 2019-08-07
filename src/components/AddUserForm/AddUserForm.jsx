@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import firestore from 'service/firestore';
+import React, { Component } from 'react';
 import moment from 'moment';
+import addUser from 'service/addUser';
 
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
@@ -31,6 +31,7 @@ export default class AddUserForm extends Component {
       email: '',
       role: '',
       image: null,
+      password: '',
       snackBar: {
         open: false,
         variant: '',
@@ -73,21 +74,28 @@ export default class AddUserForm extends Component {
   }
 
   onAddProduct = () => {
-    const { birthday, image, name, email, lastName, role } = this.state;
-    firestore.uploadImage(image).then((avatar) => {
-      const user = { avatar, birthday, email, last_name: lastName, name, role };
-      firestore.addUser(user).then((response) => {
-        this.props.onClose();
-        this.openSnackBar('success', 'Producto agregado con éxito');
-      }).catch(error => {
-        console.error(error);
-        this.openSnackBar('error', error.toString());
-      });
-    });
+    const { birthday, image, name, email, lastName, role, password } = this.state;
+    const userData = { avatar: image, birthday, email, last_name: lastName, name, role, password };
+    addUser(userData).then(() => {
+      this.props.onClose();
+      this.openSnackBar('success', 'Producto agregado con éxito');
+    }).catch(e => {
+      alert(e);
+    })
+    // firestore.uploadImage(image).then((avatar) => {
+    //   const user = { avatar, birthday, email, last_name: lastName, name, role };
+    //   firestore.addUser(user).then((response) => {
+    //     this.props.onClose();
+    //     this.openSnackBar('success', 'Producto agregado con éxito');
+    //   }).catch(error => {
+    //     console.error(error);
+    //     this.openSnackBar('error', error.toString());
+    //   });
+    // });
   }
 
   render() {
-    const { name, lastName, email, role, snackbarIsOpen, birthday, snackBar } = this.state;
+    const { name, lastName, email, role, snackbarIsOpen, birthday, snackBar, password } = this.state;
     return (
       <Card className="mla-add-user-form">
         <TextField
@@ -136,6 +144,15 @@ export default class AddUserForm extends Component {
           onChange={this.handleInputs}
           margin="normal"
           type="text"
+        />
+        <TextField
+          className="col-sm-12 col-gl-4"
+          label="Password"
+          value={password}
+          name="password"
+          onChange={this.handleInputs}
+          margin="normal"
+          type="password"
         />
         <Select
           className="mla-add-user-form__role-select"

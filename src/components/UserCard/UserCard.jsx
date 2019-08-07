@@ -9,6 +9,17 @@ import Card from '@material-ui/core/Card';
 import "./UserCard.scss";
 
 class UserCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      editMode: false,
+      name: '',
+      lastName: '',
+      role: '',
+      birthday: new Date(),
+    }
+  }
   render() {
     const { avatar, id, name, last_name, birthday, email, role } = this.props.user;
     const bdate = typeof birthday === 'string' ? moment(birthday).format('DD/MM/YYYY') : moment(birthday.seconds).format('DD/MM/YYYY');
@@ -30,12 +41,20 @@ class UserCard extends React.Component {
         <div className="user-card__row">
           <div className="user-card__detail-row space-between">
             <div className="user-card__detail-container">
-              <span className="user-card__detail-container--label">
-                Nombre:{" "}
-              </span>
-              <span>
-                {`${name} ${last_name}`}
-              </span>
+              {
+                this.state.editMode ? (
+                  <input />
+                ) : (
+                    <React.Fragment>
+                      <span className="user-card__detail-container--label">
+                        Nombre:{" "}
+                      </span>
+                      <span>
+                        {`${name} ${last_name}`}
+                      </span>
+                    </React.Fragment>
+                  )
+              }
             </div>
             <div className="user-card__detail-container">
               <span className="user-card__detail-container--label">Rol: </span>

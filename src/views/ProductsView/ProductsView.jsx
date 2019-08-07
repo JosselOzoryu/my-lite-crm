@@ -19,10 +19,10 @@ class ProductsView extends React.Component {
     this.state = { data: [], modalIsOpen: false };
   }
   renderProducts = () => {
-    return this.state.data.map(product => {
+    return this.state.data.filter(product => product.active === true).map((product) => {
       return (
         <div className="products-view__products-grid__item" key={product.id}>
-          <ProductCard product={product} />
+          <ProductCard product={product} onUpdate={this.getProducts} />
         </div>
       );
     });
