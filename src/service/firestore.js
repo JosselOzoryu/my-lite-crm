@@ -1,7 +1,6 @@
 import firebase from "firebase";
 import * as firebaseApp from "firebase/app";
 import fireConfig from "../fire";
-import * as admin from 'firebase-admin';
 import moment from 'moment';
 
 class firebaseService {
@@ -10,7 +9,6 @@ class firebaseService {
     this.db = firebase.firestore();
     this.storage = firebaseApp.storage();
     this.auth = firebaseApp.auth();
-    this.adminApp = admin.initializeApp();
   }
 
   isUserLoggedIn = () => {
@@ -86,24 +84,24 @@ class firebaseService {
     });
   }
 
-  deleteAuthUser = (email) => {
-    return new Promise((resolve, reject) => {
-      this.adminApp.auth().getUserByEmail(email).then(response => {
-        const user = JSON.parse(response);
-        this.auth.updateUser(user.email, {
-          disabled: true
-        }).then(response => {
-          resolve();
-        }).catch(e => {
-          reject(e);
-          alert(e);
-        })
-      }).catch(error => {
-        reject(error);
-        alert(error)
-      });
-    });
-  }
+  // deleteAuthUser = (email) => {
+  //   return new Promise((resolve, reject) => {
+  //     this.adminApp.auth().getUserByEmail(email).then(response => {
+  //       const user = JSON.parse(response);
+  //       this.auth.updateUser(user.email, {
+  //         disabled: true
+  //       }).then(response => {
+  //         resolve();
+  //       }).catch(e => {
+  //         reject(e);
+  //         alert(e);
+  //       })
+  //     }).catch(error => {
+  //       reject(error);
+  //       alert(error)
+  //     });
+  //   });
+  // }
 
   getUsers = () => {
     return new Promise((resolve, reject) => {
