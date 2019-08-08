@@ -1,13 +1,13 @@
 //Core imports
 import React from "react";
-import firestore from 'service/firestore';
+import firestore from "service/firestore";
 
-import Modal from '@material-ui/core/Modal';
-import AddUserForm from 'components/AddUserForm';
+import Modal from "@material-ui/core/Modal";
+import AddUserForm from "components/AddUserForm";
 import UserCard from "components/UserCard";
 import SideBar from "components/SideBar";
-import Fab from '@material-ui/core/Fab';
-import { Add as AddIcon } from '@material-ui/icons';
+import Fab from "@material-ui/core/Fab";
+import { Add as AddIcon } from "@material-ui/icons";
 
 import "./UsersView.scss";
 
@@ -19,13 +19,15 @@ class UsersView extends React.Component {
     this.originalData = [];
   }
   renderUsers = () => {
-    return this.state.data.map(user => {
-      return (
-        <div className="users-view__users-grid__item" key={user.id}>
-          <UserCard user={user} />
-        </div>
-      );
-    });
+    return this.state.data
+      .filter(user => user.active === true)
+      .map(user => {
+        return (
+          <div className="users-view__users-grid__item" key={user.id}>
+            <UserCard user={user} onUpdate={this.getUsers} />
+          </div>
+        );
+      });
   };
 
   filterUsers = searchTerm => {
@@ -73,24 +75,27 @@ class UsersView extends React.Component {
 
   openModal = () => {
     this.setState({ modalIsOpen: true });
-  }
+  };
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
 
   getUsers = () => {
-    firestore.getUsers().then((users) => {
-      this.setState({ data: users });
-      this.originalData = users;
-    }).catch((error) => {
-      console.error(error);
-    })
-  }
+    firestore
+      .getUsers()
+      .then(users => {
+        this.setState({ data: users });
+        this.originalData = users;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   componentDidMount = () => {
     this.getUsers();
-  }
+  };
 
   render() {
     const { modalIsOpen } = this.state;
@@ -111,7 +116,7 @@ class UsersView extends React.Component {
                   }}
                 >
                   Nombre - asc
-              </span>
+                </span>
                 <span
                   className="users-view__side-bar__filter-and-order__filter"
                   onClick={() => {
@@ -119,7 +124,7 @@ class UsersView extends React.Component {
                   }}
                 >
                   Nombre - desc
-              </span>
+                </span>
               </div>
             </SideBar>
           </div>
@@ -141,9 +146,16 @@ class UsersView extends React.Component {
           aria-describedby="Formulario para agregar producto"
           open={modalIsOpen}
           disableAutoFocus={true}
-          onClose={() => { this.closeModal(); }}
+          onClose={() => {
+            this.closeModal();
+          }}
         >
-          <AddUserForm onClose={() => { this.closeModal(); this.getUsers(); }} />
+          <AddUserForm
+            onClose={() => {
+              this.closeModal();
+              this.getUsers();
+            }}
+          />
         </Modal>
       </React.Fragment>
     );

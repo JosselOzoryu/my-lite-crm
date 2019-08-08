@@ -8,7 +8,16 @@ class firebaseService {
     firebaseApp.initializeApp(fireConfig);
     this.db = firebase.firestore();
     this.storage = firebaseApp.storage();
+    this.auth = firebaseApp.auth();
   }
+
+  isUserLoggedIn = () => {
+    const user = this.auth.currentUser;
+    return {
+      isLoggedIn: user ? true : false,
+      user
+    };
+  };
 
   addUser = ({ avatar, birthday, email, last_name, name, role }) => {
     return new Promise((resolve, reject) => {
@@ -18,7 +27,8 @@ class firebaseService {
         email,
         last_name,
         name,
-        role
+        role,
+        active: true
       };
       this.db
         .collection("users")
@@ -28,6 +38,99 @@ class firebaseService {
         })
         .catch(error => {
           reject(error);
+        });
+    });
+  };
+
+  addAuthUser = (email, password) => {
+    return new Promise((resolve, reject) => {
+      this.auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          switch (error) {
+            case "auth/email-already-in-use":
+              reject({ error, message: "Email no disponible" });
+              break;
+            case "auth/invalid-email":
+              reject({ error, message: "Email no válido" });
+              break;
+            case "auth/weak-password":
+              reject({ error, message: "Contraseña débil, usa una distinta" });
+              break;
+            default:
+              reject(error);
+              break;
+          }
+        });
+    });
+  };
+
+  updateUser = ({ avatar, birthday, email, last_name, name, role, id }) => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection("users")
+        .doc(id)
+        .update({
+          avatar,
+          birthday,
+          email,
+          last_name,
+          name,
+          role
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          console.error(error);
+          reject(error);
+        });
+    });
+  };
+
+  deleteUser = id => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection("users")
+        .doc(id)
+        .update({
+          active: false
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          console.error(error);
+          reject(error);
+        });
+    });
+  };
+
+  deleteAuthUser = email => {
+    return new Promise((resolve, reject) => {
+      this.adminApp
+        .auth()
+        .getUserByEmail(email)
+        .then(response => {
+          const user = JSON.parse(response);
+          this.auth
+            .updateUser(user.email, {
+              disabled: true
+            })
+            .then(response => {
+              resolve();
+            })
+            .catch(e => {
+              reject(e);
+              alert(e);
+            });
+        })
+        .catch(error => {
+          reject(error);
+          alert(error);
         });
     });
   };
@@ -100,6 +203,7 @@ class firebaseService {
   };
 
   // Productos
+
   getProducts = () => {
     return new Promise((resolve, reject) => {
       try {
@@ -133,83 +237,59 @@ class firebaseService {
           image,
           name,
           price,
+          vendor,
+          active: true
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  updateProduct = ({ description, image, name, price, vendor, id }) => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection("products")
+        .doc(id)
+        .update({
+          description,
+          image,
+          name,
+          price,
           vendor
         })
         .then(response => {
           resolve(response);
         })
         .catch(error => {
+          console.error(error);
           reject(error);
         });
     });
   };
 
-  // Services
-  getServices = () => {
-    return new Promise((resolve, reject) => {
-      try {
-        const products = [];
-        this.db
-          .collection("services")
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(function(doc) {
-              products.push({ id: doc.id, ...doc.data() });
-            });
-            resolve(products);
-          })
-          .catch(queryError => {
-            console.log("Error getting documents: ", queryError);
-            reject({ error: `Error getting documents:  ${queryError}` });
-          });
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
-
-  addService = ({ name, price, description }) => {
+  deleteProduct = id => {
     return new Promise((resolve, reject) => {
       this.db
-        .collection("services")
-        .doc(generateUID())
-        .set({
-          name,
-          price,
-          description
+        .collection("products")
+        .doc(id)
+        .update({
+          active: false
         })
         .then(response => {
           resolve(response);
         })
         .catch(error => {
+          console.error(error);
           reject(error);
         });
     });
   };
 
-  //Clients
-  getClients = () => {
-    return new Promise((resolve, reject) => {
-      try {
-        const products = [];
-        this.db
-          .collection("clients")
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(function(doc) {
-              products.push({ id: doc.id, ...doc.data() });
-            });
-            resolve(products);
-          })
-          .catch(queryError => {
-            console.log("Error getting documents: ", queryError);
-            reject({ error: `Error getting documents:  ${queryError}` });
-          });
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
+  // Clients
 
   addClient = ({ name, last_name, address, email, phone, creationDate }) => {
     return new Promise((resolve, reject) => {
@@ -222,7 +302,8 @@ class firebaseService {
           address,
           email,
           phone,
-          creationDate
+          creationDate,
+          active: true
         })
         .then(response => {
           resolve(response);
@@ -230,6 +311,80 @@ class firebaseService {
         .catch(error => {
           reject(error);
         });
+    });
+  };
+
+  updateClient = ({
+    name,
+    last_name,
+    address,
+    email,
+    phone,
+    creationDate,
+    id
+  }) => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection("products")
+        .doc(id)
+        .update({
+          name,
+          last_name,
+          address,
+          email,
+          phone,
+          creationDate
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          console.error(error);
+          reject(error);
+        });
+    });
+  };
+
+  deleteClient = id => {
+    return new Promise((resolve, reject) => {
+      this.db
+        .collection("products")
+        .doc(id)
+        .update({
+          active: false
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          console.error(error);
+          reject(error);
+        });
+    });
+  };
+
+  // Services
+
+  getServices = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const services = [];
+        this.db
+          .collection("services")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(function(doc) {
+              services.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(services);
+          })
+          .catch(queryError => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
+        reject(error);
+      }
     });
   };
 

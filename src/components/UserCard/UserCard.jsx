@@ -1,6 +1,7 @@
 //Core imports
 import React from "react";
 import moment from "moment";
+import firestore from "service/firestore";
 
 //Components
 import Card from "@material-ui/core/Card";
@@ -12,6 +13,10 @@ import { Edit as EditIcon } from "@material-ui/icons";
 import { Clear as ClearIcon } from "@material-ui/icons";
 import { Undo as UndoIcon } from "@material-ui/icons";
 import { Save as SaveIcon } from "@material-ui/icons";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
 
 //Styling imports
 import "./UserCard.scss";
@@ -22,20 +27,116 @@ class UserCard extends React.Component {
 
     this.state = {
       editMode: false,
+      dialogOpen: false,
+      dialogContent: <React.Fragment />,
       name: "",
       lastName: "",
       role: "",
-      birthday: "",
+      birthday: new Date(),
       email: ""
     };
   }
 
   changeToEditMode = () => {
-    this.setState({ editMode: !this.state.editMode });
+    this.setState({ editMode: true });
   };
-  // canselEditMode = () => {
-  //   this.setState({ editMode: !this.state.editMode });
-  // };
+
+  closeEditMode = () => {
+    this.setState({ editMode: false });
+  };
+
+  handleInputs = event => {
+    event.persist();
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  openDialog = content => {
+    this.setState({ dialogOpen: true, dialogContent: content });
+  };
+
+  closeDialog = () => {
+    this.setState({ dialogOpen: false, dialogContent: <React.Fragment /> });
+  };
+
+  onDeleteUser = () => {
+    this.openDialog(
+      <React.Fragment>
+        <DialogTitle id="alert-dialog-title">
+          {"Seguro que quieres eliminar el usuario?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={this.closeDialog} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={this.deleteUser} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </React.Fragment>
+    );
+  };
+
+  onUpdateUser = () => {
+    this.openDialog(
+      <React.Fragment>
+        <DialogTitle id="alert-dialog-title">
+          {"Seguro que quieres editar el usuario?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={this.closeDialog} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={this.updateUser} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </React.Fragment>
+    );
+  };
+
+  deleteUser = () => {
+    firestore
+      .deleteUser(this.props.user.id)
+      .then(() => {
+        alert("Eliminado con exito");
+        this.closeDialog();
+        this.props.onUpdate();
+      })
+      .catch(e => alert(e));
+  };
+
+  updateUser = () => {
+    const { name, lastName, role, birthday, email, password } = this.state;
+    const { id, image } = this.props.user;
+    firestore
+      .updateUser({
+        avatar: image,
+        birthday,
+        email,
+        last_name: lastName,
+        name,
+        role,
+        id
+      })
+      .then(() => {
+        alert("Editado con exito");
+        this.closeDialog();
+        this.closeEditMode();
+        this.props.onUpdate();
+      })
+      .catch(e => alert(e));
+  };
+
+  componentDidMount = () => {
+    const { name, last_name, role, birthday, email } = this.props.user;
+    this.setState({
+      name,
+      lastName: last_name,
+      role,
+      birthday,
+      email
+    });
+  };
 
   render() {
     const {
@@ -141,17 +242,13 @@ class UserCard extends React.Component {
             <Fab aria-label="edit" onClick={this.changeToEditMode}>
               <UndoIcon />
             </Fab>
-            <Fab
-              color="primary"
-              aria-label="edit"
-              onClick={this.changeToEditMode}
-            >
+            <Fab color="primary" aria-label="edit" onClick={this.onUpdateUser}>
               <SaveIcon />
             </Fab>
             <Fab
               color="secondary"
               aria-label="edit"
-              onClick={this.changeToEditMode}
+              onClick={this.onDeleteUser}
             >
               <ClearIcon />
             </Fab>
@@ -165,6 +262,14 @@ class UserCard extends React.Component {
             <EditIcon />
           </Fab>
         )}
+        <Dialog
+          open={this.state.dialogOpen}
+          onClose={this.closeDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          {this.state.dialogContent}
+        </Dialog>
       </Card>
     );
   }
