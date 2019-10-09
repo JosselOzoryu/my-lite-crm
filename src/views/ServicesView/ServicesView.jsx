@@ -148,7 +148,7 @@ render() {
         <AddServiceForm onClose={() => { this.closeModal(); this.getServices(); }} />
       </Modal>
     </React.Fragment>
-  )
+  );
 }
 
 export default ServicesView;
