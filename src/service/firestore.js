@@ -318,7 +318,6 @@ class firebaseService {
     });
   };
 
-<<<<<<< HEAD
   updateClient = ({ name, last_name, address, email, phone, creationDate, id }) => {
     return new Promise((resolve, reject) => {
       this.db.collection("products").doc(id).update({
