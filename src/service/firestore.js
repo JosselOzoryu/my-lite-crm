@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import * as firebaseApp from "firebase/app";
 import fireConfig from "../fire";
-import moment from 'moment';
+import moment from "moment";
 
 class firebaseService {
   constructor() {
@@ -21,14 +21,25 @@ class firebaseService {
 
   addUser = ({ avatar, birthday, email, last_name, name, role }) => {
     return new Promise((resolve, reject) => {
-      const user = { avatar, birthday: moment(birthday).unix(), email, last_name, name, role, active: true, };
-      this.db.collection("users").add(user).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+      const user = {
+        avatar,
+        birthday: moment(birthday).unix(),
+        email,
+        last_name,
+        name,
+        role
+      };
+      this.db
+        .collection("users")
+        .add(user)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
-  }
+  };
 
   addAuthUser = (email, password) => {
     return new Promise((resolve, reject) => {
@@ -111,7 +122,7 @@ class firebaseService {
           .collection("users")
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(function (doc) {
+            querySnapshot.forEach(function(doc) {
               users.push({ id: doc.id, ...doc.data() });
             });
             resolve(users);
@@ -171,7 +182,6 @@ class firebaseService {
   };
 
   // Productos
-
   getProducts = () => {
     return new Promise((resolve, reject) => {
       try {
@@ -180,7 +190,7 @@ class firebaseService {
           .collection("products")
           .get()
           .then(querySnapshot => {
-            querySnapshot.forEach(function (doc) {
+            querySnapshot.forEach(function(doc) {
               products.push({ id: doc.id, ...doc.data() });
             });
             resolve(products);
@@ -217,37 +227,73 @@ class firebaseService {
     });
   };
 
-  updateProduct = ({ description, image, name, price, vendor, id }) => {
+  // Services
+  getService = () => {
     return new Promise((resolve, reject) => {
-      this.db.collection("products").doc(id).update({
-        description,
-        image,
-        name,
-        price,
-        vendor,
-      }).then(response => {
-        resolve(response);
-      }).catch((error) => {
-        console.error(error);
+      try {
+        const products = [];
+        this.db
+          .collection("services")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(function(doc) {
+              products.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(products);
+          })
+          .catch(queryError => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
         reject(error);
-      })
+      }
     });
-  }
+  };
 
-  deleteProduct = (id) => {
+  addService = ({ id, serviceName, price, serviceInfo }) => {
     return new Promise((resolve, reject) => {
-      this.db.collection("products").doc(id).update({
-        active: false,
-      }).then(response => {
-        resolve(response);
-      }).catch((error) => {
-        console.error(error);
-        reject(error);
-      })
+      this.db
+        .collection("services")
+        .doc(generateUID())
+        .set({
+          id,
+          serviceName,
+          price,
+          serviceInfo
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
-  }
+  };
 
-  // Clients
+  //Clients
+  getClients = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const clients = [];
+        this.db
+          .collection("clients")
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(function(doc) {
+              clients.push({ id: doc.id, ...doc.data() });
+            });
+            resolve(clients);
+          })
+          .catch(queryError => {
+            console.log("Error getting documents: ", queryError);
+            reject({ error: `Error getting documents:  ${queryError}` });
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
 
   addClient = ({ name, last_name, address, email, phone, creationDate }) => {
     return new Promise((resolve, reject) => {
@@ -272,6 +318,7 @@ class firebaseService {
     });
   };
 
+<<<<<<< HEAD
   updateClient = ({ name, last_name, address, email, phone, creationDate, id }) => {
     return new Promise((resolve, reject) => {
       this.db.collection("products").doc(id).update({
@@ -305,6 +352,7 @@ class firebaseService {
 
   // Images 
   uploadImage = (image) => {
+
     return new Promise((resolve, reject) => {
       let storageRef = this.storage.ref(image.name);
       storageRef

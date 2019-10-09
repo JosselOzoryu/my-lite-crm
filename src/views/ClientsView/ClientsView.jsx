@@ -1,5 +1,6 @@
 //Core imports
 import React from "react";
+import firestore from "service/firestore";
 
 // Material components
 import Button from "@material-ui/core/Button";
@@ -24,19 +25,19 @@ import "./ClientsView.scss";
 
 var clientsData = [];
 
-function createClient(
-  id: number,
-  iduser: number,
-  name: string,
-  lastname: string,
-  address: string,
-  email: string,
-  phone: number,
-  creationDate: date
-) {
-  return { name, lastname, address, email, phone, creationDate };
-}
-
+// function createClient(
+//   id: number,
+//   iduser: number,
+//   name: string,
+//   lastname: string,
+//   address: string,
+//   email: string,
+//   phone: number,
+//   creationDate: date
+// ) {
+//   return { name, lastname, address, email, phone, creationDate };
+// }
+//
 // function getRandomInt(min, max) {
 //   min = Math.ceil(min);
 //   max = Math.floor(max);
@@ -121,14 +122,21 @@ class ClientsView extends React.Component {
     this.setState({ data: this.originalData });
   };
 
-  // componentDidMount = () => {
-  //   firestore.getUsers().then((users) => {
-  //     this.setState({ data: users });
-  //     this.originalData = users;
-  //   }).catch((error) => {
-  //     console.error(error);
-  //   })
-  // }
+  getClients = () => {
+    firestore
+      .getClients()
+      .then(clients => {
+        this.setState({ data: clients });
+        this.originalData = clients;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  componentDidMount = () => {
+    this.getClients();
+  };
 
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -142,24 +150,24 @@ class ClientsView extends React.Component {
     const { modalIsOpen } = this.state;
     return (
       <React.Fragment>
-        <section id="users-view">
-          <div className="users-view__side-bar">
+        <section id="clients-view">
+          <div className="clients-view__side-bar">
             <SideBar
               onSearch={this.filterClients}
-            //* Button to add clients on the sidebar
-            //* It got replaced by a Fab button (Material-UI)
-            // title={
-            //   <h1 className="users-view__side-bar__title">
-            //     <Link className="mla-app-bar__menu-item" to="/clients/add">
-            //       <Button color="primary">Agregar cliente</Button>
-            //     </Link>
-            //   </h1>
-            // }
+              //* Button to add clients on the sidebar
+              //* It got replaced by a Fab button (Material-UI)
+              // title={
+              //   <h1 className="users-view__side-bar__title">
+              //     <Link className="mla-app-bar__menu-item" to="/clients/add">
+              //       <Button color="primary">Agregar cliente</Button>
+              //     </Link>
+              //   </h1>
+              // }
             >
-              <div className="users-view__side-bar__filter-and-order">
+              <div className="clients-view__side-bar__filter-and-order">
                 <h2>Ordenar por:</h2>
                 <span
-                  className="users-view__side-bar__filter-and-order__filter"
+                  className="clientss-view__side-bar__filter-and-order__filter"
                   onClick={() => {
                     this.orderClients("name", "asc");
                   }}
@@ -167,7 +175,7 @@ class ClientsView extends React.Component {
                   Nombre - asc
                 </span>
                 <span
-                  className="users-view__side-bar__filter-and-order__filter"
+                  className="clients-view__side-bar__filter-and-order__filter"
                   onClick={() => {
                     this.orderClients("name", "desc");
                   }}
@@ -177,8 +185,8 @@ class ClientsView extends React.Component {
               </div>
             </SideBar>
           </div>
-          <div className="users-view__users-container">
-            {/*<div className="users-view__users-grid">{this.renderUsers()}</div>*/}
+          <div className="clients-view__users-container">
+            {/* {<div className="users-view__users-grid">{this.renderUsers()}</div>} */}
             <Paper>
               <Table>
                 <TableHead>
